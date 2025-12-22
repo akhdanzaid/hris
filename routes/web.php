@@ -29,12 +29,14 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 /* =====================
 | Data Karyawan
 ===================== */
-Route::prefix('Karyawan')->name('employee.')->group(function () {
+Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/', [KaryawanController::class, 'index'])->name('index');
     Route::get('/create', [KaryawanController::class, 'create'])->name('create');
     Route::post('/', [KaryawanController::class, 'store'])->name('store');
     Route::get('/{id}', [KaryawanController::class, 'detail'])->name('detail');
+    Route::put('/{id}', [KaryawanController::class, 'update'])->name('update');
 });
+
 
 /* =====================
 | Cuti
