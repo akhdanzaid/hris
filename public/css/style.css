@@ -1,0 +1,250 @@
+/* =========================
+   GLOBAL BASE
+========================= */
+.card {
+    border-radius: 8px;
+}
+
+.form-control {
+    background-color: #ffffff;
+    font-size: 14px;
+}
+
+/* =========================
+   PAGE CONTAINER & CARD
+========================= */
+.page-container {
+    width: 100%;
+    max-width: none;  
+    margin: 0;
+    padding: 0 24px;  
+}
+
+
+.page-card {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.page-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 14px 20px;
+}
+
+.page-title {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.page-body {
+    padding: 24px;
+}
+
+.page-action {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.page-action .btn {
+    min-width: 90px;
+}
+
+/* =========================
+   SECTION & FORM
+========================= */
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 10px;
+}
+
+/* =========================
+   PHOTO / UPLOAD
+========================= */
+.photo-upload {
+    margin-top: 10px;
+}
+
+.photo-placeholder {
+    width: 150px;
+    height: 180px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+}
+
+.photo-placeholder img {
+    width: 120px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+/* =========================
+   WELCOME / DASHBOARD
+========================= */
+.welcome-box {
+    background: linear-gradient(90deg, #93c5fd, #bfdbfe);
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+}
+
+.welcome-box h4 {
+    font-weight: 600;
+}
+
+.welcome-avatar {
+    width: 70px;
+}
+
+/* Hover shared */
+.welcome-box,
+.stat-card,
+.cuti-card {
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.stat-card:hover,
+.cuti-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,.1);
+}
+
+/* =========================
+   STAT CARD
+========================= */
+.stat-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+}
+
+.stat-card h3 {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.stat-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* =========================
+   TODO CARD
+========================= */
+.todo-card {
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.todo-card .table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.todo-card thead th {
+    background-color: #ffffff;
+    font-weight: 700;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.todo-card tbody td {
+    color: #374151;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.todo-card tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.todo-card thead th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.todo-card thead th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.todo-text.done {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+/* =========================
+   CUTI CARD (DASHBOARD)
+========================= */
+.cuti-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 22px;
+    border-radius: 14px;
+    color: #111;
+    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+}
+
+.cuti-card h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.cuti-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #374151;
+}
+
+.cuti-card .icon {
+    font-size: 28px;
+    opacity: .8;
+}
+
+.cuti-card.pending {
+    background: #fde68a;
+}
+
+.cuti-card.approved {
+    background: #86efac;
+}
+
+.cuti-card.rejected {
+    background: #fca5a5;
+}
+
+/* =========================
+   TABLE & BUTTON
+========================= */
+.table th,
+.table td {
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.btn-check.active {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+.btn-warning {
+    color: #000;
+}
