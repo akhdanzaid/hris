@@ -52,21 +52,22 @@
             </thead>
 
             <tbody>
-                {{-- DATA DUMMY --}}
-                <tr>
-                    <td class="text-center">1</td>
-                    <td>20192001</td>
-                    <td>Mahasigma</td>
-                    <td>Rp. 20.000.000</td>
-                    <td>Rp. 0</td>
-                    <td>Rp. 20.000.000</td>
-                    <td class="text-center">
-                        <a href="{{ route('gaji.edit', 1) }}" 
-                        class="btn btn-sm btn-light border btn-sm px-4">
-                            Edit
-                        </a>
-                    </td>
-                </tr>
+            @foreach ($gajis as $index => $gaji)
+            <tr>
+                <td class="text-center">{{ $index + 1 }}</td>
+                <td>{{ $gaji->karyawan->nik }}</td>
+                <td>{{ $gaji->karyawan->name }}</td>
+                <td>Rp. {{ number_format($gaji->gaji_pokok, 0, ',', '.') }}</td>
+                <td>Rp. {{ number_format($gaji->total_potongan, 0, ',', '.') }}</td>
+                <td>Rp. {{ number_format($gaji->total_gaji, 0, ',', '.') }}</td>
+                <td class="text-center">
+                    <a href="{{ route('gaji.edit', $gaji->id) }}"
+                    class="btn btn-sm btn-light border px-3">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+            @endforeach
             </tbody>
 
         </table>

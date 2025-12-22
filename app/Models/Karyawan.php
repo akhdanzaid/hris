@@ -38,4 +38,10 @@ use Illuminate\Database\Eloquent\Model;
         {
             return $this->belongsTo(Status::class);
         }
+
+        public function gajis()
+        {
+            return $this->hasMany(Gaji::class);
+        }
+
     }

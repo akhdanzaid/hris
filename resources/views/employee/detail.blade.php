@@ -140,32 +140,57 @@
 
                 {{-- Rincian Gaji --}}
                 <h6 class="section-title mt-5">Rincian Gaji</h6>
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Gaji Pokok</label>
-                        <input type="text"
-                               class="form-control bg-light"
-                               value="Rp. 20.000.000"
-                               disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Total Potongan</label>
-                        <input type="text"
-                               class="form-control bg-light"
-                               value="Rp. 100.000"
-                               disabled>
-                    </div>
-                </div>
 
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label">Total Gaji</label>
-                        <input type="text"
-                               class="form-control bg-light"
-                               value="Rp. 19.900.000"
-                               disabled>
+                @if ($gajiTerakhir)
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Gaji Pokok</label>
+                            <input type="text"
+                                class="form-control bg-light"
+                                value="Rp. {{ number_format($gajiTerakhir->gaji_pokok, 0, ',', '.') }}"
+                                disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Total Potongan</label>
+                            <input type="text"
+                                class="form-control bg-light"
+                                value="Rp. {{ number_format($gajiTerakhir->total_potongan, 0, ',', '.') }}"
+                                disabled>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Total Gaji</label>
+                            <input type="text"
+                                class="form-control bg-light"
+                                value="Rp. {{ number_format($gajiTerakhir->total_gaji, 0, ',', '.') }}"
+                                disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Periode</label>
+                            <input type="text"
+                                class="form-control bg-light"
+                                value="{{ $gajiTerakhir->periode }}"
+                                disabled>
+                        </div>
+                    </div>
+                @else
+                <div class="card border-0 bg-light mt-3">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <span class="text-muted">
+                            Data gaji belum tersedia untuk karyawan ini.
+                        </span>
+
+                        <a href="{{ route('gaji.create', ['nik' => $karyawan->nik]) }}"
+                        class="btn btn-primary btn-sm px-4"
+                        style="background:#759EB8;border:none">
+                            Tambah Gaji
+                        </a>
                     </div>
                 </div>
+                @endif
+
 
                 {{-- Foto --}}
                 <h6 class="section-title mt-5">Foto Profil</h6>

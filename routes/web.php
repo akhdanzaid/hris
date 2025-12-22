@@ -72,6 +72,10 @@ Route::prefix('gaji')->name('gaji.')->group(function () {
     Route::put('/{id}', [GajiController::class, 'update'])
         ->name('update');
 });
+Route::get('/ajax/karyawan-by-nik/{nik}', function ($nik) {
+    return \App\Models\Karyawan::where('nik', $nik)->first();
+});
+
 
 /* =====================
 | Laporan

@@ -20,19 +20,37 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label class="form-label">NIK</label>
-                    <input type="text"
-                           name="nik"
-                           class="form-control"
-                           placeholder="Masukkan NIK Karyawan">
+                <label class="form-label">NIK</label>
+                <input type="text"
+                    id="nik"
+                    name="nik"
+                    class="form-control"
+                    value="{{ $karyawan->nik ?? '' }}"
+                    {{ $karyawan ? 'readonly' : '' }}
+                    required>
+
+                    <small id="nikError" class="text-danger d-none">
+                        NIK tidak ditemukan. Silakan buat data karyawan terlebih dahulu.
+                    </small>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nama Karyawan</label>
+                    <input type="text"
+                        id="nama"
+                        class="form-control bg-light"
+                        value="{{ $karyawan->name ?? '' }}"
+                        readonly>
+                </div>
+
 
                 <div class="mb-3">
                     <label class="form-label">Gaji Pokok</label>
                     <input type="number"
-                           name="gaji_pokok"
-                           class="form-control"
-                           placeholder="Masukkan Gaji Pokok">
+                        name="gaji_pokok"
+                        class="form-control"
+                        placeholder="Masukkan Gaji Pokok"
+                        required>
                 </div>
 
                 <div class="d-flex justify-content-end gap-3 mt-5">
@@ -41,7 +59,10 @@
                         Kembali
                     </a>
                     <button type="submit"
-                            class="btn btn-primary btn-sm px-4" style="background:#759EB8;border:none">
+                            id="btnSubmit"
+                            class="btn btn-primary btn-sm px-4"
+                            style="background:#759EB8;border:none"
+                            {{ $karyawan ? '' : 'disabled' }}>
                         Tambah
                     </button>
                 </div>
@@ -50,4 +71,46 @@
 
     </div>
 </div>
+
+<!-- js autofill -->
+<script>
+const nikInput  = document.getElementById('nik');
+const namaInput = document.getElementById('nama');
+const errorText = document.getElementById('nikError');
+const btnSubmit = document.getElementById('btnSubmit');
+
+// Kalau NIK datang dari detail karyawan
+if (nikInput.hasAttribute('readonly')) {
+    btnSubmit.disabled = false;
+}
+
+nikInput.addEventListener('blur', function () {
+    const nik = this.value.trim();
+
+    if (!namaInput) return;
+
+    namaInput.value = '';
+    btnSubmit.disabled = true;
+
+    if (!nik) return;
+
+    fetch(`/ajax/karyawan-by-nik/${nik}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data) {
+                namaInput.value = data.name;
+                errorText.classList.add('d-none');
+                btnSubmit.disabled = false;
+            } else {
+                errorText.classList.remove('d-none');
+            }
+        })
+        .catch(() => {
+            errorText.classList.remove('d-none');
+        });
+});
+</script>
+
 @endsection
+
+

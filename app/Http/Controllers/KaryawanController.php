@@ -86,17 +86,28 @@ class KaryawanController extends Controller
     // fungsi detail
     public function detail($id)
     {
-        $karyawan = Karyawan::findOrFail($id);
+        $karyawan = Karyawan::with([
+            'department',
+            'position',
+            'status',
+            'gajis' => function ($q) {
+                $q->orderBy('periode', 'desc');
+            }
+        ])->findOrFail($id);
 
         $departments = Department::all();
         $positions   = Position::all();
         $statuses    = Status::all();
 
+        // ambil gaji TERBARU (opsional)
+        $gajiTerakhir = $karyawan->gajis->first();
+
         return view('employee.detail', compact(
             'karyawan',
             'departments',
             'positions',
-            'statuses'
+            'statuses',
+            'gajiTerakhir'
         ));
     }
 
