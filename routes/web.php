@@ -35,6 +35,7 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::post('/', [KaryawanController::class, 'store'])->name('store');
     Route::get('/{id}', [KaryawanController::class, 'detail'])->name('detail');
     Route::put('/{id}', [KaryawanController::class, 'update'])->name('update');
+    Route::delete('/{id}', [KaryawanController::class, 'destroy'])->name('destroy');
 });
 
 

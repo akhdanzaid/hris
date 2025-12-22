@@ -150,5 +150,24 @@ class KaryawanController extends Controller
             ->route('employee.index')
             ->with('success', 'Data karyawan berhasil diperbarui');
     }
+
+    // fungsi delete
+    public function destroy($id)
+    {
+        $karyawan = Karyawan::findOrFail($id);
+
+        // Hapus file foto jika ada
+        if ($karyawan->photo && file_exists(public_path('images/karyawan/' . $karyawan->photo))) {
+            unlink(public_path('images/karyawan/' . $karyawan->photo));
+        }
+
+        // Hapus data karyawan
+        $karyawan->delete();
+
+        return redirect()
+            ->route('employee.index')
+            ->with('success', 'Data karyawan berhasil dihapus');
+    }
+
 }
 

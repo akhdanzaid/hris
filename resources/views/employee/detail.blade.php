@@ -193,7 +193,7 @@
                 </div>
 
                 {{-- Action --}}
-                <div class="d-flex justify-content-end gap-2 mt-5">
+                <div class="d-flex justify-content-end gap-3 mt-5">
                     <a href="{{ route('employee.index') }}"
                        class="btn btn-secondary btn-sm px-4">
                         Kembali
@@ -202,6 +202,16 @@
                         class="btn btn-success btn-sm px-4">
                         Update
                     </button>
+                    <form action="{{ route('employee.destroy', $karyawan->id) }}"
+                        method="POST"
+                        onsubmit="return confirm('Yakin ingin menghapus data karyawan ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                class="btn btn-danger btn-sm px-4">
+                            Hapus
+                        </button>
+                    </form>
                 </div>
 
             </form>
