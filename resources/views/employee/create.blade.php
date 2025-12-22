@@ -34,23 +34,26 @@
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Jenis Kelamin</label>
-                        <select name="gender" class="form-select">
-                            <option value="">Pilih Jenis Kelamin</option>
-                            <option value="L">Laki-laki</option>
-                            <option value="P">Perempuan</option>
-                        </select>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tempat Lahir</label>
+                            <input type="text" name="birth_place" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tanggal Lahir</label>
+                            <input type="date" name="birth_date" class="form-control">
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Tempat, Tanggal Lahir</label>
-                        <input type="text"
-                               name="birth_place_date"
-                               class="form-control"
-                               placeholder="Tempat, Tanggal Lahir">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Jenis Kelamin</label>
+                            <select name="gender" class="form-select">
+                                <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
                 {{-- Kontak --}}
                 <h6 class="section-title mt-5">Kontak</h6>
@@ -71,7 +74,7 @@
                     <div class="col-md-6">
                         <label class="form-label">Departemen</label>
                         <select name="department_id" class="form-select">
-                            <option value="">Pilih Departemen</option>
+                            <option value="" disabled selected>Pilih Departemen</option>
                             @foreach ($departments as $dept)
                                 <option value="{{ $dept->id }}">{{ $dept->name }}</option>
                             @endforeach
@@ -80,7 +83,7 @@
                     <div class="col-md-6">
                         <label class="form-label">Jabatan</label>
                         <select name="position_id" class="form-select">
-                            <option value="">Pilih Jabatan</option>
+                            <option value="" disabled selected>Pilih Jabatan</option>
                             @foreach ($positions as $pos)
                                 <option value="{{ $pos->id }}">{{ $pos->name }}</option>
                             @endforeach
@@ -95,12 +98,12 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Status Karyawan</label>
-                        <select name="employment_status" class="form-select">
-                            <option value="">Pilih Status</option>
-                            <option value="permanent">Tetap</option>
-                            <option value="contract">Kontrak</option>
-                            <option value="intern">Magang</option>
-                        </select>
+                            <select name="status_id" class="form-select">
+                                <option value="" disabled selected>Pilih Status</option>
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                @endforeach
+                            </select>
                     </div>
                 </div>
 

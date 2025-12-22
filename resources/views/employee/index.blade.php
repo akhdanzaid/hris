@@ -46,20 +46,29 @@
                         <th style="width:120px">Aksi</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr>
-                        <td class="text-center">1</td>
-                        <td>20219001</td>
-                        <td>Moh. Suryono</td>
-                        <td>CEO</td>
-                        <td>085214321876</td>
-                        <td class="text-center">
-                            <a href="{{ route('employee.detail', 1) }}"
-                               class="btn btn-sm btn-light border px-4">
-                                Lihat
-                            </a>
-                        </td>
-                    </tr>
+                    @forelse ($karyawan as $item)
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $item->nik }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->position->name }}</td>
+                            <td>{{ $item->phone }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('employee.detail', $item->id) }}"
+                                class="btn btn-sm btn-light border px-4">
+                                    Lihat
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">
+                                Data karyawan belum tersedia
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
