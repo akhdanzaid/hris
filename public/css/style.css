@@ -92,6 +92,28 @@
     border: 1px solid #e5e7eb;
 }
 
+.photo-img {
+    max-width: 150px;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+.pagination {
+    gap: 6px;
+}
+
+.page-item .page-link {
+    border-radius: 8px;
+    color: #374151;
+}
+
+.page-item.active .page-link {
+    background-color: #759EB8;
+    border-color: #759EB8;
+    color: #fff;
+}
+
 /* =========================
    WELCOME / DASHBOARD
 ========================= */

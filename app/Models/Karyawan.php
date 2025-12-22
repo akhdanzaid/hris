@@ -9,18 +9,20 @@ use Illuminate\Database\Eloquent\Model;
         protected $table = 'karyawan';
 
         protected $fillable = [
-            'nik', 
-            'name', 
-            'gender', 
-            'birth_place', 
+            'nik',
+            'name',
+            'gender',
+            'birth_place',
             'birth_date',
-            'phone', 
-            'email', 
-            'department_id', 
+            'phone',
+            'email',
+            'department_id',
             'position_id',
-            'join_date', 
-            'status_id'
+            'status_id',
+            'join_date',
+            'photo',
         ];
+
 
         public function department()
         {

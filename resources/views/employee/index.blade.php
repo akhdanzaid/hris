@@ -22,16 +22,24 @@
     <div class="page-index-body">
 
         {{-- Search --}}
-        <form method="GET" class="row g-2 align-items-center mb-3">
+        <form method="GET"
+            action="{{ route('employee.index') }}"
+            class="row g-2 align-items-center mb-3">
             <div class="col">
-                <input type="text" name="search" class="form-control" placeholder="Cari Karyawan">
+                <input type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Cari Karyawan Berdasarkan NIK atau Nama"
+                    value="{{ request('search') }}">
             </div>
             <div class="col-auto">
-                <button class="btn btn-secondary px-4" style="background:#759EB8; border:none;">
+                <button class="btn btn-secondary px-4"
+                        style="background:#759EB8; border:none;">
                     Search
                 </button>
             </div>
         </form>
+
 
         {{-- Table --}}
         <div class="table-responsive">
@@ -41,6 +49,7 @@
                         <th style="width:50px">No</th>
                         <th>NIK</th>
                         <th>Nama</th>
+                        <th style="width:200px">Foto</th>
                         <th>Jabatan</th>
                         <th>No. Telepon</th>
                         <th style="width:120px">Aksi</th>
@@ -50,9 +59,19 @@
                 <tbody>
                     @forelse ($karyawan as $item)
                         <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">
+                                {{ ($karyawan->currentPage() - 1) * $karyawan->perPage() + $loop->iteration }}
+                            </td>
                             <td>{{ $item->nik }}</td>
                             <td>{{ $item->name }}</td>
+                            <td class="text-center">
+                                <img
+                                    src="{{ $item->photo 
+                                            ? asset('images/karyawan/' . $item->photo) 
+                                            : asset('assets/img/user-placeholder.png') }}"
+                                    alt="Foto Karyawan"
+                                    style="width:50px; height:50px; object-fit:cover;">
+                            </td>
                             <td>{{ $item->position->name }}</td>
                             <td>{{ $item->phone }}</td>
                             <td class="text-center">
@@ -64,7 +83,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center text-muted">
+                            <td colspan="7" class="text-center text-muted">
                                 Data karyawan belum tersedia
                             </td>
                         </tr>
@@ -72,8 +91,12 @@
                 </tbody>
             </table>
         </div>
-
+        {{-- Pagination --}}
+        @if ($karyawan->hasPages())
+            <div class="d-flex justify-content-end mt-3">
+                {{ $karyawan->links('pagination::bootstrap-5') }}
+            </div>
+        @endif
     </div>
-
 </div>
 @endsection

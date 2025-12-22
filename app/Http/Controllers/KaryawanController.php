@@ -12,14 +12,29 @@ use App\Models\Status;
 
 class KaryawanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $karyawan = Karyawan::with(['department', 'position', 'status'])
-            ->orderBy('name')
-            ->get();
+        $query = Karyawan::with(['department', 'position', 'status']);
+
+        // Fitur search (nama atau NIK)
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('nik', 'like', "%{$search}%");
+            });
+        }
+
+        // Pagination akan menampilkan 10 data per halaman
+        $karyawan = $query
+            ->orderBy('id', 'asc')
+            ->paginate(10);
+            // ->withQueryString(); // agar search tetap aktif saat pindah halaman
 
         return view('employee.index', compact('karyawan'));
     }
+
 
     // fungsi tambah
     public function create()
@@ -35,22 +50,30 @@ class KaryawanController extends Controller
         ));
     }
 
+    // fungsi insert
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nik'           => 'required|unique:karyawan,nik',
             'name'          => 'required|string',
-            'gender'        => 'required',
+            'gender'        => 'required|in:L,P',
             'birth_place'   => 'required|string',
             'birth_date'    => 'required|date',
             'phone'         => 'required',
             'email'         => 'nullable|email',
-
             'department_id' => 'required|exists:departments,id',
             'position_id'   => 'required|exists:positions,id',
             'status_id'     => 'required|exists:statuses,id',
             'join_date'     => 'required|date',
+            'photo'         => 'nullable|image|mimes:jpg,jpeg,png',
         ]);
+
+            if ($request->hasFile('photo')) {
+                $imageName = time().'.'.$request->photo->getClientOriginalExtension();
+                $request->photo->move(public_path('images/karyawan'), $imageName);
+
+                $validated['photo'] = $imageName;
+            }
 
         Karyawan::create($validated);
 
@@ -58,6 +81,7 @@ class KaryawanController extends Controller
             ->route('employee.index')
             ->with('success', 'Data karyawan berhasil ditambahkan');
     }
+
 
     // fungsi detail
     public function detail($id)
@@ -90,10 +114,12 @@ class KaryawanController extends Controller
             'position_id'   => 'required|exists:positions,id',
             'status_id'     => 'required|exists:statuses,id',
             'join_date'     => 'required|date',
+            'photo'         => 'nullable|image|mimes:jpg,jpeg,png,webp',
         ]);
 
         $karyawan = Karyawan::findOrFail($id);
 
+        // update data utama
         $karyawan->update([
             'name'          => $request->name,
             'birth_place'   => $request->birth_place,
@@ -107,8 +133,21 @@ class KaryawanController extends Controller
             'join_date'     => $request->join_date,
         ]);
 
+        // update foto
+        if ($request->hasFile('photo')) {
+            if ($karyawan->photo && file_exists(public_path('images/karyawan/'.$karyawan->photo))) {
+                unlink(public_path('images/karyawan/'.$karyawan->photo));
+            }
+
+            $imageName = time().'.'.$request->photo->getClientOriginalExtension();
+            $request->photo->move(public_path('images/karyawan'), $imageName);
+
+            $karyawan->photo = $imageName;
+            $karyawan->save();
+        }
+
         return redirect()
-            ->route('employee.detail', $id)
+            ->route('employee.index')
             ->with('success', 'Data karyawan berhasil diperbarui');
     }
 }

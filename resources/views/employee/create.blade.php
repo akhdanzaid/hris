@@ -26,28 +26,28 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">NIK</label>
-                        <input type="text" name="nik" class="form-control">
+                        <input type="text" name="nik" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Nama Lengkap</label>
-                        <input type="text" name="name" class="form-control">
+                        <input type="text" name="name" class="form-control" required>
                     </div>
                 </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Tempat Lahir</label>
-                            <input type="text" name="birth_place" class="form-control">
+                            <input type="text" name="birth_place" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Tanggal Lahir</label>
-                            <input type="date" name="birth_date" class="form-control">
+                            <input type="date" name="birth_date" class="form-control" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Jenis Kelamin</label>
-                            <select name="gender" class="form-select">
+                            <select name="gender" class="form-select" required>
                                 <option value="" disabled selected>Pilih Jenis Kelamin</option>
                                 <option value="L">Laki-laki</option>
                                 <option value="P">Perempuan</option>
@@ -60,7 +60,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">No. Telepon</label>
-                        <input type="text" name="phone" class="form-control">
+                        <input type="text" name="phone" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
@@ -73,7 +73,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Departemen</label>
-                        <select name="department_id" class="form-select">
+                        <select name="department_id" class="form-select" required>
                             <option value="" disabled selected>Pilih Departemen</option>
                             @foreach ($departments as $dept)
                                 <option value="{{ $dept->id }}">{{ $dept->name }}</option>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Jabatan</label>
-                        <select name="position_id" class="form-select">
+                        <select name="position_id" class="form-select" required>
                             <option value="" disabled selected>Pilih Jabatan</option>
                             @foreach ($positions as $pos)
                                 <option value="{{ $pos->id }}">{{ $pos->name }}</option>
@@ -94,11 +94,11 @@
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <label class="form-label">Tanggal Bergabung</label>
-                        <input type="date" name="join_date" class="form-control">
+                        <input type="date" name="join_date" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Status Karyawan</label>
-                            <select name="status_id" class="form-select">
+                            <select name="status_id" class="form-select" required>
                                 <option value="" disabled selected>Pilih Status</option>
                                 @foreach ($statuses as $status)
                                     <option value="{{ $status->id }}">{{ $status->name }}</option>
@@ -109,14 +109,26 @@
 
                 {{-- Foto --}}
                 <h6 class="section-title mt-5">Foto Profile</h6>
+
                 <div class="photo-upload mb-4">
                     <label class="photo-box">
-                        <input type="file" name="photo" hidden>
+
+                        <input type="file"
+                            name="photo"
+                            hidden
+                            accept="image/*"
+                            onchange="previewPhoto(event)">
+
                         <div class="photo-placeholder">
-                            Upload Photo Here
+                            <img id="photoPreview"
+                                class="photo-img d-none">
+                            <span id="photoText">
+                                Upload Photo Here
+                            </span>
                         </div>
                     </label>
                 </div>
+
 
                 {{-- Action --}}
                 <div class="d-flex justify-content-end gap-2 mt-5">
@@ -136,3 +148,23 @@
     </div>
 </div>
 @endsection
+
+<script>
+function previewPhoto(event) {
+    const input = event.target;
+    const preview = document.getElementById('photoPreview');
+    const text = document.getElementById('photoText');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('d-none');
+            text.classList.add('d-none');
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>

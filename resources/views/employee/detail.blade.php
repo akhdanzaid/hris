@@ -16,7 +16,7 @@
         </div>
 
         <div class="card-body page-body">
-            <form action="{{ route('employee.update', $karyawan->id) }}" method="POST">
+            <form action="{{ route('employee.update', $karyawan->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -168,12 +168,26 @@
                 </div>
 
                 {{-- Foto --}}
-                <h6 class="section-title mt-5">Foto Profile</h6>
+                <h6 class="section-title mt-5">Foto Profil</h6>
+
                 <div class="photo-upload mb-4">
                     <label class="photo-box">
-                        <input type="file" name="photo" hidden>
+
+                        <input type="file"
+                            name="photo"
+                            hidden
+                            accept="image/*"
+                            onchange="previewPhoto(event)">
+
                         <div class="photo-placeholder">
-                            Upload Photo Here
+                            <img id="photoPreview"
+                                src="{{ $karyawan->photo ? asset('images/karyawan/'.$karyawan->photo) : '' }}"
+                                class="photo-img {{ $karyawan->photo ? '' : 'd-none' }}">
+                            <span id="photoText"
+                                class="{{ $karyawan->photo ? 'd-none' : '' }}">
+                                Upload Photo Here
+                            </span>
+
                         </div>
                     </label>
                 </div>
@@ -195,3 +209,25 @@
     </div>
 </div>
 @endsection
+
+<script>
+function previewPhoto(event) {
+    const input = event.target;
+    const preview = document.getElementById('photoPreview');
+    const text = document.getElementById('photoText');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('d-none');
+            text.classList.add('d-none');
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+
+
