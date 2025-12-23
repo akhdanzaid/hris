@@ -8,7 +8,7 @@ use App\Http\Controllers\GajiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\AkunController;
-
+use App\Http\Controllers\AbsensiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +36,26 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/{id}', [KaryawanController::class, 'detail'])->name('detail');
     Route::put('/{id}', [KaryawanController::class, 'update'])->name('update');
     Route::delete('/{id}', [KaryawanController::class, 'destroy'])->name('destroy');
+});
+
+/* =====================
+| Absensi
+===================== */
+Route::prefix('absensi')->name('absensi.')->group(function () {
+
+    // halaman tampilan absensi (tanpa auth)
+    Route::get('/', function () {
+        return view('absensi.index');
+    })->name('index');
+
+    // halaman barcode
+    Route::get('/barcode/{tipe}', function ($tipe) {
+        return view('absensi.barcode', compact('tipe'));
+    })->name('barcode');
+
+    // proses absensi (PAKAI CONTROLLER ANDA)
+    Route::post('/store', [AbsensiController::class, 'store'])
+        ->name('store');
 });
 
 
@@ -143,6 +163,7 @@ Route::prefix('akun')->name('akun.')->group(function () {
     Route::put('/update', [AkunController::class, 'update'])
         ->name('update');
 });
+
 
 /* =====================
 | Endpoint AJAX

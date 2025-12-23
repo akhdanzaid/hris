@@ -127,7 +127,7 @@
     <a href="{{ route('dashboard.index') }}">Dashboard</a>
     <a href="{{ route('employee.index') }}">Data Karyawan</a>
     <a href="#">Data User</a>
-    <a href="#">Absensi</a>
+    <a href="{{ route('absensi.index') }}">Absensi</a>
     <a href="{{ route('cuti.index') }}">Cuti</a>
     <a href="{{ route('gaji.index') }}">Gaji</a>
     <a href="{{ route('laporan.index') }}">Laporan</a>

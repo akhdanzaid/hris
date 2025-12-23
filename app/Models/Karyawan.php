@@ -49,4 +49,10 @@ use Illuminate\Database\Eloquent\Model;
             return $this->hasMany(Cuti::class);
         }
 
+        public function absensis()
+        {
+            return $this->hasMany(Absensi::class);
+        }
+
+
     }

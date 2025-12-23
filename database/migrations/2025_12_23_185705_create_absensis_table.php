@@ -10,14 +10,32 @@ return new class extends Migration {
         Schema::create('absensis', function (Blueprint $table) {
             $table->id();
 
+            // Relasi ke karyawan (bukan users)
             $table->foreignId('karyawan_id')
                   ->constrained('karyawan')
                   ->cascadeOnDelete();
 
             $table->date('tanggal');
-            $table->enum('status', ['hadir', 'izin', 'cuti', 'alpha']);
+
+            $table->time('jam_masuk')->nullable();
+            $table->time('jam_pulang')->nullable();
+
+            $table->enum('status', [
+                'hadir',
+                'telat',
+                'cuti',
+                'tidak hadir'
+            ]);
+
+            $table->enum('metode', [
+                'barcode',
+                'manual'
+            ])->default('barcode');
 
             $table->timestamps();
+
+            // Satu karyawan hanya boleh 1 absensi per tanggal
+            $table->unique(['karyawan_id', 'tanggal']);
         });
     }
 
@@ -26,4 +44,3 @@ return new class extends Migration {
         Schema::dropIfExists('absensis');
     }
 };
-
