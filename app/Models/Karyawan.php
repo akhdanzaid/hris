@@ -44,4 +44,9 @@ use Illuminate\Database\Eloquent\Model;
             return $this->hasMany(Gaji::class);
         }
 
+        public function cuti()
+        {
+            return $this->hasMany(Cuti::class);
+        }
+
     }

@@ -43,14 +43,33 @@ Route::prefix('employee')->name('employee.')->group(function () {
 | Cuti
 ===================== */
 Route::prefix('cuti')->name('cuti.')->group(function () {
-    Route::get('/', [CutiController::class, 'index'])->name('index');
+
+    // INDEX
+    Route::get('/', [CutiController::class, 'index'])
+        ->name('index');
+
+    // CREATE
+    Route::get('/create', [CutiController::class, 'create'])
+        ->name('create');
+
+    // STORE
+    Route::post('/', [CutiController::class, 'store'])
+        ->name('store');
+
+    // APPROVE
+    Route::put('/{id}/approve', [CutiController::class, 'approve'])
+        ->name('approve');
+
+    // REJECT
+    Route::put('/{id}/reject', [CutiController::class, 'reject'])
+        ->name('reject');
+
+    // DETAIL (WAJIB PALING BAWAH)
+    Route::get('/{id}', [CutiController::class, 'show'])
+        ->name('detail');
 });
 
-/* =====================
-| Detail Cuti
-===================== */
-Route::get('/cuti/{id}', [CutiController::class, 'show'])
-    ->name('cuti.detail');
+
 
 /* =====================
 | Gaji
@@ -72,10 +91,6 @@ Route::prefix('gaji')->name('gaji.')->group(function () {
     Route::put('/{id}', [GajiController::class, 'update'])
         ->name('update');
 });
-Route::get('/ajax/karyawan-by-nik/{nik}', function ($nik) {
-    return \App\Models\Karyawan::where('nik', $nik)->first();
-});
-
 
 /* =====================
 | Laporan
@@ -127,4 +142,11 @@ Route::prefix('akun')->name('akun.')->group(function () {
     // Simpan perubahan (dummy)
     Route::put('/update', [AkunController::class, 'update'])
         ->name('update');
+});
+
+/* =====================
+| Endpoint AJAX
+===================== */
+Route::get('/ajax/karyawan-by-nik/{nik}', function ($nik) {
+    return \App\Models\Karyawan::where('nik', $nik)->first();
 });

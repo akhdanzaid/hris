@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<!-- js autofill -->
+<!-- AJAX -->
 <script>
 const nikInput  = document.getElementById('nik');
 const namaInput = document.getElementById('nama');
