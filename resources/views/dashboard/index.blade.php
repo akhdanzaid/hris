@@ -13,7 +13,9 @@
     <div class="welcome-box d-flex justify-content-between align-items-center mb-4">
         <div>
             <h4 class="mb-1">Selamat Datang</h4>
-            <p class="mb-0 text-muted">Muhammad Ihsan</p>
+            <p class="mb-0 text-muted">@if(Auth::check())
+                {{ Auth::user()->username }}
+                @endif</p>
         </div>
         <img src="{{ asset('img/avatar.png') }}" alt="avatar" class="welcome-avatar">
     </div>

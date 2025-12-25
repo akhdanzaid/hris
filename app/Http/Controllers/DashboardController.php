@@ -10,4 +10,8 @@ class DashboardController extends Controller
     {
         return view('dashboard.index');
     }
+
+    public function indexk() {
+        return view('dashboardk.index');
+    }
 }

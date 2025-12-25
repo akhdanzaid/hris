@@ -124,11 +124,9 @@
 <div class="sidebar">
     <h4 class="text-center">HRIS</h4>
 
-    <a href="{{ route('dashboard.index') }}">Dashboard</a>
-    <a href="{{ route('absensi.index') }}">Absensi</a>
-    <a href="{{ route('cuti.index') }}">Cuti</a>
-    <a href="{{ route('gaji.index') }}">Gaji</a>
-    <a href="{{ route('laporan.index') }}">Laporan</a>
+    <a href="#">Dashboard</a>
+    <a href="#">Absensi</a>
+    <a href="#">Cuti</a>
 </div>
 
 <!-- NAVBAR -->

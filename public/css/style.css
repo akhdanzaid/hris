@@ -270,3 +270,123 @@
 .btn-warning {
     color: #000;
 }
+
+
+/* BAGIAN LOGINN */
+body {
+    background: url('/images/login/bg.jpg') no-repeat center/cover;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card-custom {
+    padding: 40px;
+    background: rgba(196, 196, 196, 0.4);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    color: white;
+    box-shadow: 5px 5px 10px black;
+}
+
+.bantuhrd {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 100px;
+}
+
+.pwlupa {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(239, 236, 227, 1);
+}
+
+
+
+/* dashboard */
+
+
+
+/* Welcome Banner */
+.welcome-box {
+    background: linear-gradient(90deg, #93c5fd, #bfdbfe);
+    padding: 20px 24px;
+    border-radius: 12px;
+}
+
+.welcome-box h4 {
+    font-weight: 600;
+}
+
+.welcome-avatar {
+    width: 70px;
+    height: auto;
+}
+
+/* Statistik Card */
+.stat-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.stat-card h3 {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Todo List */
+.todo-text.done {
+    color: #16a34a;
+    font-weight: 600;
+    text-decoration: line-through;
+}
+
+.btn-check.active {
+    background-color: #16a34a;
+    border-color: #16a34a;
+    color: white;
+}
+
+/* Employee Page */
+.employee-wrapper {
+    background: #f9fafb;
+}
+
+/* Table styling */
+.table-employee {
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.table-employee thead th {
+    background: #f3f4f6;
+    text-align: center;
+    font-weight: 600;
+}
+
+.table-employee td {
+    vertical-align: middle;
+}
+
+.table-employee tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* Buttons */
+.btn-secondary {
+    background: #6b7280;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
+}

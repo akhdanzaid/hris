@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             PositionSeeder::class,
             StatusSeeder::class,
             KaryawanSeeder::class,
-            CutiSeeder::class
+            CutiSeeder::class,
+            UserSeeder::class
         ]); 
     }
 }
