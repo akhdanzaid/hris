@@ -124,12 +124,12 @@
 <div class="sidebar">
     <h4 class="text-center">HRIS</h4>
 
-    <a href="#">Dashboard</a>
-    <a href="#">Absensi</a>
-    <a href="#">Cuti</a>
+    <a href="{{ route('dashboardk.index') }}">Dashboard</a>
+    <a href="{{ route('absensik.index') }}">Absensi</a>
+    <a href="{{ route('cutik.index') }}">Cuti</a>
 </div>
 
-<!-- NAVBAR -->
+<!-- NAVBAR --> 
 <nav class="navbar navbar-expand navbar-custom px-4">
     <div class="container-fluid">
         <span class="fw-semibold">
@@ -137,7 +137,7 @@
         </span>
 
         <div class="d-flex align-items-center gap-4">
-            <a href="{{ route('pengumuman.index') }}" class="text-decoration-none text-dark">
+            <a href="{{ route('pengumumank.index') }}" class="text-decoration-none text-dark">
                 Pengumuman
             </a>
 

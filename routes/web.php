@@ -12,6 +12,9 @@ use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DatauserController;
+use App\Http\Controllers\CutikController;
+use App\Http\Controllers\AbsensikController;
+use App\Http\Controllers\PengumumankController;
 
 
 
@@ -205,6 +208,51 @@ Route::prefix('akun')->name('akun.')->group(function () {
     // Simpan perubahan (dummy)
     Route::put('/update', [AkunController::class, 'update'])
         ->name('update');
+});
+
+/* =====================
+| Cuti Karyawan
+===================== */
+Route::prefix('cutik')->name('cutik.')->group(function () {
+
+    Route::get('/', [CutikController::class, 'index'])
+        ->name('index');
+
+    Route::get('/create', [CutikController::class, 'create'])
+        ->name('create');
+
+    Route::post('/', [CutikController::class, 'store'])
+        ->name('store');
+
+    Route::get('/{id}', [CutikController::class, 'show'])
+        ->name('detail');
+});
+
+/* =====================
+| Absensi Karyawan
+===================== */
+Route::prefix('absensik')->name('absensik.')->group(function () {
+
+    Route::get('/', [AbsensikController::class, 'index'])
+        ->name('index');
+
+    Route::post('/store', [AbsensikController::class, 'store'])
+        ->name('store');
+
+    Route::get('/history', [AbsensikController::class, 'history'])
+        ->name('history');
+});
+
+/* =====================
+| Pengumuman Karyawan
+===================== */
+Route::prefix('pengumumank')->name('pengumumank.')->group(function () {
+
+    Route::get('/', [PengumumankController::class, 'index'])
+        ->name('index');
+
+    Route::get('/{id}', [PengumumankController::class, 'show'])
+        ->name('detail');
 });
 
 
