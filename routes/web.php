@@ -11,8 +11,7 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\datauserController;
+use App\Http\Controllers\DatauserController;
 
 
 
@@ -23,20 +22,21 @@ use App\Http\Controllers\datauserController;
 */
 
 
-// BAGIAN LOGINN
+/* =====================
+| Login
+===================== */
 Route::get('/',[LoginController::class,'index']);
 Route::post('/login',[LoginController::class,'login'])->name('login');
 
 
-//Logout
+/* =====================
+| Logout
+===================== */
 Route::post('/logout',[LoginController::class,'logout'])->name('logout');
 
 // Test AUTH BISA AKSES HANYA JIKA SUDAH LOGIN
 Route::middleware('auth')->group(function() { 
 
-// Route::get('/', function () {
-//     return redirect()->route('dashboard.index');
-// });
 
 /* =====================
 | Dashboard
@@ -45,8 +45,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard.index');
 Route::get('/dashboardk', [DashboardController::class, 'indexk'])
     ->name('dashboardk.index');
-
-
 
 /* =====================
 | Data Karyawan
@@ -58,6 +56,17 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/{id}', [KaryawanController::class, 'detail'])->name('detail');
     Route::put('/{id}', [KaryawanController::class, 'update'])->name('update');
     Route::delete('/{id}', [KaryawanController::class, 'destroy'])->name('destroy');
+});
+
+/* =====================
+| Data User
+===================== */
+Route::prefix('datauser')->name('datauser.')->group(function () {
+    Route::get('/', [DatauserController::class, 'index'])->name('index');
+    Route::delete('/{id}', [DatauserController::class, 'destroy'])->name('destroy');
+    // Register user dari halaman data user
+    Route::post('/register', [RegisterController::class, 'register'])->name('register');
+
 });
 
 /* =====================
@@ -194,17 +203,6 @@ Route::get('/ajax/karyawan-by-nik/{nik}', function ($nik) {
     return \App\Models\Karyawan::where('nik', $nik)->first();
 });
 
-
-
-// Data User
-Route::get('/datauser', [datauserController::class, 'index'])
-     ->name('datauser');  
-Route::delete('/datauser/{id}', [datauserController::class, 'destroy'])->name('users.destroy');
-
-//Register DI DATAUSER
-
-Route::post('/register', [RegisterController::class, 'register'])
-     ->name('register');
-
 });
+
 

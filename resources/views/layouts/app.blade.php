@@ -125,11 +125,14 @@
     <h4 class="text-center">HRIS</h4>
 
     <a href="{{ route('dashboard.index') }}">Dashboard</a>
+    <a href="{{ route('employee.index') }}">Data Karyawan</a>
+    <a href="{{ route('datauser.index') }}">Data User</a>
     <a href="{{ route('absensi.index') }}">Absensi</a>
     <a href="{{ route('cuti.index') }}">Cuti</a>
     <a href="{{ route('gaji.index') }}">Gaji</a>
     <a href="{{ route('laporan.index') }}">Laporan</a>
 </div>
+
 
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand navbar-custom px-4">

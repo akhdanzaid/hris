@@ -10,17 +10,19 @@
 <div class="form-container">
     <div class="card form-card">
 
-        {{-- Header --}}
         <div class="card-header page-header">
             <h5 class="page-title mb-0">Detail Karyawan</h5>
         </div>
 
         <div class="card-body page-body">
-            <form action="{{ route('employee.update', $karyawan->id) }}" method="POST" enctype="multipart/form-data">
+
+            <form action="{{ route('employee.update', $karyawan->id) }}"
+                  method="POST"
+                  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
-                {{-- Informasi Dasar --}}
+                {{-- ================= INFORMASI DASAR ================= --}}
                 <h6 class="section-title">Informasi Dasar</h6>
 
                 <div class="row mb-3">
@@ -36,7 +38,8 @@
                         <input type="text"
                                name="name"
                                class="form-control"
-                               value="{{ $karyawan->name }}">
+                               value="{{ $karyawan->name }}"
+                               required>
                     </div>
                 </div>
 
@@ -46,37 +49,40 @@
                         <input type="text"
                                name="birth_place"
                                class="form-control"
-                               value="{{ $karyawan->birth_place }}">
+                               value="{{ $karyawan->birth_place }}"
+                               required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Tanggal Lahir</label>
                         <input type="date"
                                name="birth_date"
                                class="form-control"
-                               value="{{ $karyawan->birth_date }}">
+                               value="{{ $karyawan->birth_date }}"
+                               required>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Jenis Kelamin</label>
-                        <select name="gender" class="form-select">
-                            <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                        <select name="gender" class="form-select" required>
                             <option value="L" {{ $karyawan->gender == 'L' ? 'selected' : '' }}>Laki-laki</option>
                             <option value="P" {{ $karyawan->gender == 'P' ? 'selected' : '' }}>Perempuan</option>
                         </select>
                     </div>
                 </div>
 
-                {{-- Kontak --}}
+                {{-- ================= KONTAK ================= --}}
                 <h6 class="section-title mt-5">Kontak</h6>
+
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">No. Telepon</label>
                         <input type="text"
                                name="phone"
                                class="form-control"
-                               value="{{ $karyawan->phone }}">
+                               value="{{ $karyawan->phone }}"
+                               required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
@@ -87,13 +93,13 @@
                     </div>
                 </div>
 
-                {{-- Detail Pekerjaan --}}
+                {{-- ================= DETAIL PEKERJAAN ================= --}}
                 <h6 class="section-title mt-5">Detail Pekerjaan</h6>
+
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Departemen</label>
-                        <select name="department_id" class="form-select">
-                            <option value="" disabled selected>Pilih Departemen</option>
+                        <select name="department_id" class="form-select" required>
                             @foreach ($departments as $dept)
                                 <option value="{{ $dept->id }}"
                                     {{ $karyawan->department_id == $dept->id ? 'selected' : '' }}>
@@ -102,10 +108,10 @@
                             @endforeach
                         </select>
                     </div>
+
                     <div class="col-md-6">
                         <label class="form-label">Jabatan</label>
-                        <select name="position_id" class="form-select">
-                            <option value="" disabled selected>Pilih Jabatan</option>
+                        <select name="position_id" class="form-select" required>
                             @foreach ($positions as $pos)
                                 <option value="{{ $pos->id }}"
                                     {{ $karyawan->position_id == $pos->id ? 'selected' : '' }}>
@@ -122,12 +128,12 @@
                         <input type="date"
                                name="join_date"
                                class="form-control"
-                               value="{{ $karyawan->join_date }}">
+                               value="{{ $karyawan->join_date }}"
+                               required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Status Karyawan</label>
-                        <select name="status_id" class="form-select">
-                            <option value="" disabled selected>Pilih Status</option>
+                        <select name="status_id" class="form-select" required>
                             @foreach ($statuses as $status)
                                 <option value="{{ $status->id }}"
                                     {{ $karyawan->status_id == $status->id ? 'selected' : '' }}>
@@ -138,7 +144,7 @@
                     </div>
                 </div>
 
-                {{-- Rincian Gaji --}}
+                {{-- ================= RINCIAN GAJI ================= --}}
                 <h6 class="section-title mt-5">Rincian Gaji</h6>
 
                 @if ($gajiTerakhir)
@@ -146,16 +152,16 @@
                         <div class="col-md-6">
                             <label class="form-label">Gaji Pokok</label>
                             <input type="text"
-                                class="form-control bg-light"
-                                value="Rp. {{ number_format($gajiTerakhir->gaji_pokok, 0, ',', '.') }}"
-                                disabled>
+                                   class="form-control bg-light"
+                                   value="Rp. {{ number_format($gajiTerakhir->gaji_pokok, 0, ',', '.') }}"
+                                   disabled>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Total Potongan</label>
                             <input type="text"
-                                class="form-control bg-light"
-                                value="Rp. {{ number_format($gajiTerakhir->total_potongan, 0, ',', '.') }}"
-                                disabled>
+                                   class="form-control bg-light"
+                                   value="Rp. {{ number_format($gajiTerakhir->total_potongan, 0, ',', '.') }}"
+                                   disabled>
                         </div>
                     </div>
 
@@ -163,83 +169,97 @@
                         <div class="col-md-6">
                             <label class="form-label">Total Gaji</label>
                             <input type="text"
-                                class="form-control bg-light"
-                                value="Rp. {{ number_format($gajiTerakhir->total_gaji, 0, ',', '.') }}"
-                                disabled>
+                                   class="form-control bg-light"
+                                   value="Rp. {{ number_format($gajiTerakhir->total_gaji, 0, ',', '.') }}"
+                                   disabled>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Periode</label>
                             <input type="text"
-                                class="form-control bg-light"
-                                value="{{ $gajiTerakhir->periode }}"
-                                disabled>
+                                   class="form-control bg-light"
+                                   value="{{ $gajiTerakhir->periode }}"
+                                   disabled>
                         </div>
                     </div>
                 @else
-                <div class="card border-0 bg-light mt-3">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <span class="text-muted">
-                            Data gaji belum tersedia untuk karyawan ini.
-                        </span>
+                    <div class="card border-0 bg-light mt-3">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <span class="text-muted">
+                                Data gaji belum tersedia untuk karyawan ini.
+                            </span>
 
-                        <a href="{{ route('gaji.create', ['nik' => $karyawan->nik]) }}"
-                        class="btn btn-primary btn-sm px-4"
-                        style="background:#759EB8;border:none">
-                            Tambah Gaji
-                        </a>
+                            <a href="{{ route('gaji.create', ['nik' => $karyawan->nik]) }}"
+                               class="btn btn-primary btn-sm px-4"
+                               style="background:#759EB8;border:none">
+                                Tambah Gaji
+                            </a>
+                        </div>
                     </div>
-                </div>
                 @endif
 
-
-                {{-- Foto --}}
+                {{-- ================= FOTO ================= --}}
                 <h6 class="section-title mt-5">Foto Profil</h6>
 
                 <div class="photo-upload mb-4">
                     <label class="photo-box">
-
                         <input type="file"
-                            name="photo"
-                            hidden
-                            accept="image/*"
-                            onchange="previewPhoto(event)">
-
+                               name="photo"
+                               hidden
+                               accept="image/*"
+                               onchange="previewPhoto(event)">
                         <div class="photo-placeholder">
                             <img id="photoPreview"
-                                src="{{ $karyawan->photo ? asset('images/karyawan/'.$karyawan->photo) : '' }}"
-                                class="photo-img {{ $karyawan->photo ? '' : 'd-none' }}">
-                            <span id="photoText"
-                                class="{{ $karyawan->photo ? 'd-none' : '' }}">
-                                Upload Photo Here
-                            </span>
-
+                                 src="{{ $karyawan->photo
+                                        ? asset('images/karyawan/'.$karyawan->photo)
+                                        : asset('assets/img/user-placeholder.png') }}"
+                                 class="photo-img">
                         </div>
                     </label>
+                    <small class="text-muted d-block mt-2">
+                        Klik foto jika ingin mengganti foto profil
+                    </small>
                 </div>
 
-                {{-- Action --}}
-                <div class="d-flex justify-content-end gap-3 mt-5">
+               {{-- ================= ACTION ================= --}}
+                <div class="d-flex justify-content-end align-items-center gap-3 mt-5">
+
+                    {{-- Kembali --}}
                     <a href="{{ route('employee.index') }}"
-                       class="btn btn-secondary btn-sm px-4">
+                    class="btn btn-secondary btn-sm px-4">
                         Kembali
                     </a>
-                    <button type="submit"
-                        class="btn btn-success btn-sm px-4">
-                        Update
-                    </button>
+
+                    {{-- FORM UPDATE --}}
+                    <form action="{{ route('employee.update', $karyawan->id) }}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                        class="m-0">
+                        @csrf
+                        @method('PUT')
+
+                        <button type="submit"
+                                class="btn btn-success btn-sm px-4">
+                            Update
+                        </button>
+                    </form>
+
+                    {{-- FORM DELETE --}}
                     <form action="{{ route('employee.destroy', $karyawan->id) }}"
                         method="POST"
-                        onsubmit="return confirm('Yakin ingin menghapus data karyawan ini?')">
+                        onsubmit="return confirm('Yakin ingin menghapus data karyawan ini?')"
+                        class="m-0">
                         @csrf
                         @method('DELETE')
+
                         <button type="submit"
                                 class="btn btn-danger btn-sm px-4">
                             Hapus
                         </button>
                     </form>
+
                 </div>
 
-            </form>
+
         </div>
     </div>
 </div>
@@ -247,22 +267,13 @@
 
 <script>
 function previewPhoto(event) {
-    const input = event.target;
-    const preview = document.getElementById('photoPreview');
-    const text = document.getElementById('photoText');
+    const file = event.target.files[0];
+    if (!file) return;
 
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.classList.remove('d-none');
-            text.classList.add('d-none');
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById('photoPreview').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
 }
 </script>
-
-
