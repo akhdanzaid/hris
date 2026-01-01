@@ -58,12 +58,12 @@ class CutiController extends Controller
             'alasan'          => $request->alasan,
             'tanggal_mulai'   => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
-            'berkas'          => $path,     
+            'berkas'          => $path,
             'status'          => 'pending',
         ]);
 
         return redirect()
-            ->route('dashboard.index')
+            ->route('cuti.index')
             ->with('success', 'Pengajuan cuti berhasil dikirim');
     }
 

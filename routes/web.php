@@ -35,7 +35,7 @@ Route::post('/login',[LoginController::class,'login'])->name('login');
 Route::post('/logout',[LoginController::class,'logout'])->name('logout');
 
 // Test AUTH BISA AKSES HANYA JIKA SUDAH LOGIN
-Route::middleware('auth')->group(function() { 
+Route::middleware('auth')->group(function() {
 
 
 /* =====================
@@ -45,6 +45,18 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard.index');
 Route::get('/dashboardk', [DashboardController::class, 'indexk'])
     ->name('dashboardk.index');
+
+
+/* =====================
+| Dashboard Todo
+===================== */
+Route::prefix('dashboard/todo')->name('dashboard.todo.')->group(function () {
+    Route::post('/', [DashboardController::class, 'storeTodo'])->name('store');
+    Route::delete('/{id}', [DashboardController::class, 'destroy'])->name('destroy');
+    Route::patch('/{id}/toggle', [DashboardController::class, 'toggle'])->name('toggle');
+});
+
+
 
 /* =====================
 | Data Karyawan

@@ -44,9 +44,9 @@ body {
 ========================= */
 .page-container {
     width: 100%;
-    max-width: none;  
+    max-width: none;
     margin: 0;
-    padding: 0 24px;  
+    padding: 0 24px;
 }
 
 
@@ -298,4 +298,10 @@ body {
 
 .btn-warning {
     color: #000;
+}
+
+
+.todo-text.done {
+    text-decoration: line-through;
+    color: #999;
 }
