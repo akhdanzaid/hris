@@ -201,14 +201,13 @@ Route::prefix('pengumuman')->name('pengumuman.')->group(function () {
 ===================== */
 Route::prefix('akun')->name('akun.')->group(function () {
 
-    // Halaman edit (dummy)
     Route::get('/edit', [AkunController::class, 'edit'])
         ->name('edit');
 
-    // Simpan perubahan (dummy)
     Route::put('/update', [AkunController::class, 'update'])
         ->name('update');
 });
+
 
 /* =====================
 | Cuti Karyawan

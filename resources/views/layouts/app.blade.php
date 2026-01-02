@@ -149,11 +149,9 @@
             <div class="nav-divider"></div>
 
             <a href="{{ route('akun.edit') }}" class="text-decoration-none text-dark">
-                <span>Hi,@if(Auth::check())
-                {{ Auth::user()->username }}
-                @endif
-            </span>
-            </a>
+            Hi, {{ Auth::user()->username }}
+        </a>
+
 
             <form action="{{ route('logout') }}" method="POST" class="d-inline-flex m-0 px-0">
             @csrf

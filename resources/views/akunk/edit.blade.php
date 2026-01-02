@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layoutsk.app')
 
 @section('page-title', 'Edit Akun')
 

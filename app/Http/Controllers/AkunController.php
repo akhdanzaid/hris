@@ -1,29 +1,68 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
+
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth; // ⬅️ WAJIB
 
 class AkunController extends Controller
 {
     public function edit()
     {
-        // DATA DUMMY
-        $user = (object) [
-            'username' => 'tommy',
-            'email'    => 'tommy@unsada.ac',
-            'role'     => 'karyawan',
-        ];
+         $user = Auth::user();
 
-        return view('akun.edit', compact('user'));
+    // 🔥 PILIH VIEW BERDASARKAN ROLE
+    if ($user->role === 'hrd') {
+        return view('akun.edit', [
+            'user' => $user
+        ]);
     }
-    public function update(Request $request)
-    {
-        // Simulasi update (belum ke DB)
-        // Biasanya di sini ada User::find()->update()
 
+    return view('akunk.edit', [
+        'user' => $user
+    ]);
+    }
+
+public function update(Request $request)
+{
+    $request->validate(
+        [
+            'email' => 'required|email',
+            'password' => 'nullable|min:6|confirmed',
+        ],
+        [
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'password.min' => 'Password minimal 6 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak cocok',
+        ]
+    );
+
+    $user = User::findOrFail(Auth::id());
+
+    $data = [
+        'email' => $request->email,
+    ];
+
+    if ($request->filled('password')) {
+        $data['password'] = Hash::make($request->password);
+    }
+
+    $user->update($data);
+
+    // 🔥 LOGIKA REDIRECT BERDASARKAN ROLE
+    if ($user->role === 'hrd') {
         return redirect()
-            ->route('akun.edit')
-            ->with('success', 'Data akun berhasil disimpan (dummy).');
+            ->route('dashboard.index')
+            ->with('success', 'Akun berhasil diperbarui');
     }
+
+    return redirect()
+        ->route('dashboardk.index')
+        ->with('success', 'Akun berhasil diperbarui');
+}
+
 }
