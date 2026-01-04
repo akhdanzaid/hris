@@ -69,54 +69,62 @@ public function store(Request $request)
         'position_id'   => 'required|exists:positions,id',
         'status_id'     => 'required|exists:statuses,id',
         'join_date'     => 'required|date',
-        'photo'         => 'nullable|image|mimes:jpg,jpeg,png',
+        'photo'         => 'nullable|image|mimes:jpg,jpeg,png,webp',
     ]);
 
     DB::beginTransaction();
 
     try {
-        // 1. Simpan karyawan
+        // SIMPAN FOTO (JIKA ADA)
+        $imageName = null;
+        if ($request->hasFile('photo')) {
+            $imageName = time().'.'.$request->photo->getClientOriginalExtension();
+            $request->photo->move(public_path('images/karyawan'), $imageName);
+        }
+
+        // SIMPAN KARYAWAN
         $karyawan = Karyawan::create([
-            'nik' => $request->nik,
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'birth_place' => $request->birth_place,
-            'birth_date' => $request->birth_date,
-            'phone' => $request->phone,
-            'email' => $request->email,
+            'nik'           => $request->nik,
+            'name'          => $request->name,
+            'gender'        => $request->gender,
+            'birth_place'   => $request->birth_place,
+            'birth_date'    => $request->birth_date,
+            'phone'         => $request->phone,
+            'email'         => $request->email,
             'department_id' => $request->department_id,
-            'position_id' => $request->position_id,
-            'status_id' => $request->status_id,
-            'join_date' => $request->join_date,
+            'position_id'   => $request->position_id,
+            'status_id'     => $request->status_id,
+            'join_date'     => $request->join_date,
+            'photo'         => $imageName,
         ]);
 
-        // 2. Generate username (nama depan + id)
+        // BUAT USER
         $namaDepan = Str::of($karyawan->name)->explode(' ')->first();
-        $username  = strtolower($namaDepan) . $karyawan->id;
+        $username  = strtolower($namaDepan).$karyawan->id;
 
-        // 3. Buat user otomatis
         User::create([
-            'username' => $username,
-            'email' => $karyawan->email,
-            'password' => Hash::make('123456'),
-            'role' => 'karyawan',
-            'karyawan_id' => $karyawan->id,
+            'username'     => $username,
+            'email'        => $karyawan->email,
+            'password'     => Hash::make('123456'),
+            'role'         => 'karyawan',
+            'karyawan_id'  => $karyawan->id,
         ]);
 
         DB::commit();
 
         return redirect()
             ->route('employee.index')
-            ->with('success', 'Karyawan berhasil ditambahkan dan akun login otomatis dibuat.');
+            ->with('success', 'Karyawan berhasil ditambahkan.');
 
     } catch (\Throwable $e) {
         DB::rollBack();
 
         return back()
             ->withInput()
-            ->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
+            ->with('error', 'Gagal menyimpan data: '.$e->getMessage());
     }
 }
+
 
     // fungsi detail
     public function detail($id)

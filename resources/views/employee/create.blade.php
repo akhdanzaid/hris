@@ -235,3 +235,22 @@
     </div>
 </div>
 @endsection
+
+<script>
+function previewPhoto(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = document.getElementById('photoPreview');
+        const text = document.getElementById('photoText');
+
+        img.src = e.target.result;
+        img.classList.remove('d-none'); // 🔥 tampilkan gambar
+        text.classList.add('d-none');   // 🔥 sembunyikan teks
+    };
+    reader.readAsDataURL(file);
+}
+</script>
+
