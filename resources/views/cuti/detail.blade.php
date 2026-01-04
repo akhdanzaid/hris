@@ -80,13 +80,14 @@
             {{-- Action --}}
             <div class="page-action d-flex gap-2">
                 <a href="{{ route('cuti.index') }}"
-                   class="btn btn-secondary btn-sm px-4">
+                class="btn btn-secondary btn-sm px-4">
                     Kembali
                 </a>
 
                 @if ($cuti->status === 'pending')
+
                     <form action="{{ route('cuti.reject', $cuti->id) }}"
-                          method="POST">
+                        method="POST">
                         @csrf
                         @method('PUT')
                         <button class="btn btn-danger btn-sm px-4"
@@ -96,7 +97,7 @@
                     </form>
 
                     <form action="{{ route('cuti.approve', $cuti->id) }}"
-                          method="POST">
+                        method="POST">
                         @csrf
                         @method('PUT')
                         <button class="btn btn-success btn-sm px-4"
@@ -104,7 +105,20 @@
                             Setujui
                         </button>
                     </form>
+
+                @else
+                    {{-- Sudah diputuskan --}}
+                    <form action="{{ route('cuti.reset', $cuti->id) }}"
+                        method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button class="btn btn-warning btn-sm px-4"
+                                onclick="return confirm('Ubah status cuti ini menjadi pending kembali?')">
+                            Ubah Keputusan
+                        </button>
+                    </form>
                 @endif
+
             </div>
 
         </div>

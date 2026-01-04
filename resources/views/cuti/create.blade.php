@@ -97,10 +97,14 @@
                 </div>
 
                 {{-- Action --}}
-                <div class="text-end">
+                <div class="page-action d-flex gap-2">
+                    <a href="{{ route('cuti.index') }}"
+                        class="btn btn-secondary btn-sm px-4">
+                            Kembali
+                        </a>
                     <button type="submit"
                             id="btnSubmit"
-                            class="btn btn-primary px-4">
+                            class="btn btn-primary btn-sm px-4">
                         Ajukan
                     </button>
                 </div>

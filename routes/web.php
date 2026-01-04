@@ -87,23 +87,24 @@ Route::prefix('datauser')->name('datauser.')->group(function () {
 /* =====================
 | Absensi
 ===================== */
-Route::prefix('absensi')->name('absensi.')->group(function () {
+Route::prefix('absensi')
+    ->middleware(['auth', 'role:hrd'])
+    ->name('absensi.')
+    ->group(function () {
 
-    // halaman tampilan absensi (tanpa auth)
-    Route::get('/', function () {
-        return view('absensi.index');
-    })->name('index');
+        Route::get('/', [AbsensiController::class, 'index'])
+            ->name('index');
 
-    // halaman barcode
-    Route::get('/barcode/{tipe}', function ($tipe) {
-        return view('absensi.barcode', compact('tipe'));
-    })->name('barcode');
+        Route::post('/session/start', [AbsensiController::class, 'startSession'])
+            ->name('session.start');
 
-    // proses absensi (PAKAI CONTROLLER ANDA)
-    Route::post('/store', [AbsensiController::class, 'store'])
-        ->name('store');
-});
+        Route::post('/session/{id}/close', [AbsensiController::class, 'closeSession'])
+            ->name('session.close');
 
+        // ✅ TAMBAHKAN INI
+        Route::post('/store', [AbsensiController::class, 'store'])
+            ->name('store');
+    });
 
 /* =====================
 | Cuti
@@ -130,11 +131,14 @@ Route::prefix('cuti')->name('cuti.')->group(function () {
     Route::put('/{id}/reject', [CutiController::class, 'reject'])
         ->name('reject');
 
+    // RESET
+    Route::put('/{id}/reset', [CutiController::class, 'reset'])
+        ->name('reset');
+
     // DETAIL (WAJIB PALING BAWAH)
     Route::get('/{id}', [CutiController::class, 'show'])
         ->name('detail');
 });
-
 
 
 /* =====================
@@ -230,17 +234,17 @@ Route::prefix('cutik')->name('cutik.')->group(function () {
 /* =====================
 | Absensi Karyawan
 ===================== */
-Route::prefix('absensik')->name('absensik.')->group(function () {
+Route::prefix('absensik')
+    ->middleware(['auth', 'role:karyawan'])
+    ->name('absensik.')
+    ->group(function () {
 
-    Route::get('/', [AbsensikController::class, 'index'])
-        ->name('index');
+        Route::get('/', [AbsensikController::class, 'index'])
+            ->name('index');
 
-    Route::post('/store', [AbsensikController::class, 'store'])
-        ->name('store');
-
-    Route::get('/history', [AbsensikController::class, 'history'])
-        ->name('history');
-});
+        Route::post('/store', [AbsensikController::class, 'store'])
+            ->name('store');
+    });
 
 /* =====================
 | Pengumuman Karyawan

@@ -130,7 +130,7 @@
     <a href="{{ route('absensi.index') }}">Absensi</a>
     <a href="{{ route('cuti.index') }}">Cuti</a>
     <a href="{{ route('gaji.index') }}">Gaji</a>
-    <a href="{{ route('laporan.index') }}">Laporan</a>
+    <!-- <a href="{{ route('laporan.index') }}">Laporan</a> -->
 </div>
 
 

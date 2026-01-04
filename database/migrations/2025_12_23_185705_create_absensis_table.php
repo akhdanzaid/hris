@@ -7,13 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('absensis', function (Blueprint $table) {
+       Schema::create('absensis', function (Blueprint $table) {
             $table->id();
 
-            // Relasi ke karyawan (bukan users)
             $table->foreignId('karyawan_id')
-                  ->constrained('karyawan')
-                  ->cascadeOnDelete();
+                ->constrained('karyawan')
+                ->cascadeOnDelete();
 
             $table->date('tanggal');
 
@@ -34,7 +33,6 @@ return new class extends Migration {
 
             $table->timestamps();
 
-            // Satu karyawan hanya boleh 1 absensi per tanggal
             $table->unique(['karyawan_id', 'tanggal']);
         });
     }

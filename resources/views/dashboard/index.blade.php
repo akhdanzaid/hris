@@ -65,11 +65,20 @@
     <div class="page-index-body">
         <h3 class="fw-bold mb-4">Todo List</h3>
 
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+            {{-- Flash Message --}}
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show mb-4">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show mb-4">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
     <form action="{{ route('dashboard.todo.store') }}" method="POST"
         class="d-flex gap-2 mb-4">

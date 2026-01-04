@@ -29,7 +29,7 @@
             {{-- Search --}}
             <form method="GET"
                   action="{{ route('employee.index') }}"
-                  class="row g-2 align-items-center mb-5">
+                  class="row g-2 align-items-center mb-4">
                 <div class="col">
                     <input type="text"
                            name="search"
@@ -44,6 +44,21 @@
                     </button>
                 </div>
             </form>
+
+            {{-- Flash Message --}}
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show mb-4">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show mb-4">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
             {{-- Table --}}
             <div class="table-responsive">

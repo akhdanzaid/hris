@@ -8,11 +8,7 @@
 
 @section('content')
 <div class="form-container">
-    @if(session('success'))
-    <div class="alert alert-success mb-4">
-        {{ session('success') }}
-    </div>
-    @endif
+
     {{-- Statistik --}}
     <div class="row mb-5">
         <div class="col-md-4">
@@ -62,6 +58,21 @@
 
         {{-- Body --}}
         <div class="card-body page-body">
+
+            {{-- Flash Message --}}
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show mb-4">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show mb-4">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
             <div class="table-responsive">
                 <table class="table table-bordered align-middle table-card">

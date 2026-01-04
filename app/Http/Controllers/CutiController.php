@@ -110,6 +110,23 @@ class CutiController extends Controller
             ->with('success', 'Pengajuan cuti ditolak');
     }
 
+    public function reset($id)
+    {
+        $cuti = Cuti::findOrFail($id);
+
+        // Jika masih pending, tidak perlu reset
+        if ($cuti->status === 'pending') {
+            return back()->with('warning', 'Status cuti masih pending.');
+        }
+
+        $cuti->update([
+            'status' => 'pending'
+        ]);
+
+        return redirect()
+            ->route('cuti.index')
+            ->with('success', 'Status cuti berhasil dikembalikan ke pending.');
+    }
 
 }
 
