@@ -8,6 +8,10 @@ use App\Models\Karyawan;
 use App\Models\Department;
 use App\Models\Position;
 use App\Models\Status;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 
 class KaryawanController extends Controller
@@ -50,38 +54,69 @@ class KaryawanController extends Controller
         ));
     }
 
-    // fungsi insert
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nik'           => 'required|unique:karyawan,nik',
-            'name'          => 'required|string',
-            'gender'        => 'required|in:L,P',
-            'birth_place'   => 'required|string',
-            'birth_date'    => 'required|date',
-            'phone'         => 'required',
-            'email'         => 'nullable|email',
-            'department_id' => 'required|exists:departments,id',
-            'position_id'   => 'required|exists:positions,id',
-            'status_id'     => 'required|exists:statuses,id',
-            'join_date'     => 'required|date',
-            'photo'         => 'nullable|image|mimes:jpg,jpeg,png',
+    // fungsi insert dan auto generate user
+public function store(Request $request)
+{
+    $request->validate([
+        'nik'           => 'required|unique:karyawan,nik',
+        'name'          => 'required|string',
+        'gender'        => 'required|in:L,P',
+        'birth_place'   => 'required|string',
+        'birth_date'    => 'required|date',
+        'phone'         => 'required',
+        'email'         => 'required|email|unique:karyawan,email|unique:users,email',
+        'department_id' => 'required|exists:departments,id',
+        'position_id'   => 'required|exists:positions,id',
+        'status_id'     => 'required|exists:statuses,id',
+        'join_date'     => 'required|date',
+        'photo'         => 'nullable|image|mimes:jpg,jpeg,png',
+    ]);
+
+    DB::beginTransaction();
+
+    try {
+        // 1. Simpan karyawan
+        $karyawan = Karyawan::create([
+            'nik' => $request->nik,
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'birth_place' => $request->birth_place,
+            'birth_date' => $request->birth_date,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'department_id' => $request->department_id,
+            'position_id' => $request->position_id,
+            'status_id' => $request->status_id,
+            'join_date' => $request->join_date,
         ]);
 
-            if ($request->hasFile('photo')) {
-                $imageName = time().'.'.$request->photo->getClientOriginalExtension();
-                $request->photo->move(public_path('images/karyawan'), $imageName);
+        // 2. Generate username (nama depan + id)
+        $namaDepan = Str::of($karyawan->name)->explode(' ')->first();
+        $username  = strtolower($namaDepan) . $karyawan->id;
 
-                $validated['photo'] = $imageName;
-            }
+        // 3. Buat user otomatis
+        User::create([
+            'username' => $username,
+            'email' => $karyawan->email,
+            'password' => Hash::make('123456'),
+            'role' => 'karyawan',
+            'karyawan_id' => $karyawan->id,
+        ]);
 
-        Karyawan::create($validated);
+        DB::commit();
 
         return redirect()
             ->route('employee.index')
-            ->with('success', 'Data karyawan berhasil ditambahkan');
-    }
+            ->with('success', 'Karyawan berhasil ditambahkan dan akun login otomatis dibuat.');
 
+    } catch (\Throwable $e) {
+        DB::rollBack();
+
+        return back()
+            ->withInput()
+            ->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
+    }
+}
 
     // fungsi detail
     public function detail($id)
