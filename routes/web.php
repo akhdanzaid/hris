@@ -23,8 +23,13 @@ use App\Http\Controllers\{
 | AUTH (GUEST)
 |--------------------------------------------------------------------------
 */
-Route::get('/', [LoginController::class, 'index'])->middleware('guest');
-Route::post('/login', [LoginController::class, 'login'])->name('login')->middleware('guest');
+
+/* =====================
+| Login
+===================== */
+Route::get('/', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +66,7 @@ Route::middleware('auth')->group(function () {
     */
     Route::middleware('role:hrd')->group(function () {
 
-        /* TO DO */        
+        /* TO DO */
         Route::prefix('dashboard/todo')->name('dashboard.todo.')->group(function () {
             Route::post('/', [DashboardController::class, 'storeTodo'])->name('store');
             Route::patch('/{id}/toggle', [DashboardController::class, 'toggleTodo'])->name('toggle');

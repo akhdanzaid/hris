@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Absensi;
 use App\Models\AbsensiSession;
 use App\Models\Karyawan;
+use App\Models\Cuti;
+use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+
 
 class AbsensiController extends Controller
 {
@@ -25,7 +28,8 @@ class AbsensiController extends Controller
 
         $karyawan = Karyawan::orderBy('name')->get();
 
-        $absensiHariIni = Absensi::whereDate('tanggal', today())->get()
+        $absensiHariIni = Absensi::whereDate('tanggal', today())
+            ->get()
             ->keyBy('karyawan_id');
 
         return view('absensi.index', compact(

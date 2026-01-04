@@ -35,14 +35,27 @@
                            readonly>
                 </div>
 
-                <div class="mb-4">
+
+                                <div class="mb-4">
                     <label class="form-label">Gaji Pokok</label>
                     <input type="number"
-                           name="gaji_pokok"
-                           class="form-control"
-                           value="{{ $gaji->gaji_pokok }}"
-                           required>
+                        name="gaji_pokok"
+                        class="form-control"
+                        value="{{ $gaji->gaji_pokok }}"
+                        min="0"
+                        required>
                 </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Total Potongan</label>
+                    <input type="number"
+                        name="total_potongan"
+                        class="form-control"
+                        value="{{ $gaji->total_potongan ?? 0 }}"
+                        min="0"
+                        required>
+                </div>
+
 
                 <div class="d-flex justify-content-end gap-2">
                     <a href="{{ route('gaji.index') }}"
@@ -61,3 +74,4 @@
     </div>
 </div>
 @endsection
+

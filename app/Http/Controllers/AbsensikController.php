@@ -52,11 +52,8 @@ class AbsensikController extends Controller
     $tanggal = today();
 
     // Validasi jam sesi
-    if (
-        $now->lt(Carbon::createFromTimeString($session->jam_mulai)) ||
-        $now->gt(Carbon::createFromTimeString($session->jam_selesai))
-    ) {
-        return back()->with('error', 'Absensi di luar jam yang ditentukan.');
+    if ($now->lt(Carbon::createFromTimeString($session->jam_mulai))) {
+        return back()->with('error', 'Absensi belum dibuka.');
     }
 
     // Ambil absensi hari ini

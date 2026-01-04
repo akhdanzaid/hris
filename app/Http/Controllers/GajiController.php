@@ -74,23 +74,28 @@ class GajiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'gaji_pokok' => 'required|numeric|min:0',
-        ]);
+        'gaji_pokok'     => 'required|numeric|min:0',
+        'total_potongan' => 'required|numeric|min:0',
+    ]);
 
         $gaji = Gaji::findOrFail($id);
 
-        // sementara potongan = 0 (nanti dari absensi)
-        $totalPotongan = 0;
+        // Hitung otomatis
+        $totalGaji = $request->gaji_pokok - $request->total_potongan;
+
+        // Antisipasi minus
+        if ($totalGaji < 0) {
+            $totalGaji = 0;
+        }
 
         $gaji->update([
             'gaji_pokok'     => $request->gaji_pokok,
-            'total_potongan' => $totalPotongan,
-            'total_gaji'     => $request->gaji_pokok - $totalPotongan,
+            'total_potongan' => $request->total_potongan,
+            'total_gaji'     => $totalGaji,
         ]);
 
         return redirect()
             ->route('gaji.index')
             ->with('success', 'Data gaji berhasil diperbarui');
-}
-
+    }
 }

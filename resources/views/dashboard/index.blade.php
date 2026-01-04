@@ -27,7 +27,7 @@
     <div class="row g-3 mb-5">
 
         <div class="col-md-3">
-            <div class="stat-card 
+            <div class="stat-card
                 {{ session('just_logged_in') ? 'animate-stat delay-1' : '' }}">
                 <h3>{{ $totalKaryawan }}</h3>
                 <p>Karyawan</p>
@@ -35,9 +35,9 @@
         </div>
 
         <div class="col-md-3">
-            <div class="stat-card 
+            <div class="stat-card
                 {{ session('just_logged_in') ? 'animate-stat delay-2' : '' }}">
-                <h3>50</h3>
+                <h3>{{ $totalHadir }}</h3>
                 <p>Total Hadir</p>
             </div>
         </div>

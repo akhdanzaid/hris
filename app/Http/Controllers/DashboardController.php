@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Todo;
 use App\Models\Karyawan;
+use App\Models\Absensi;
 use App\Models\Cuti;
 use App\Models\Gaji;
 
@@ -28,11 +29,17 @@ class DashboardController extends Controller
         // Pengajuan cuti yang MASIH pending
         $pendingCuti = Cuti::where('status', 'pending')->count();
 
+        // Total karyawan yang hadir hari ini
+        $totalHadir = Absensi::whereDate('tanggal', today())
+        ->whereNotNull('jam_masuk')
+        ->count();
+
         return view('dashboard.index', compact(
             'todos',
             'currentTask',
             'totalKaryawan',
-            'pendingCuti'
+            'pendingCuti',
+            'totalHadir'
         ));
     }
 
