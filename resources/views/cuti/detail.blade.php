@@ -86,40 +86,52 @@
 
                 @if ($cuti->status === 'pending')
 
-                    <form action="{{ route('cuti.reject', $cuti->id) }}"
-                        method="POST">
+                    {{-- Tolak --}}
+                    <button type="button"
+                            class="btn btn-danger btn-sm px-4"
+                            onclick="confirmRejectCuti()">
+                        Tolak
+                    </button>
+
+                    {{-- Setujui --}}
+                    <button type="button"
+                            class="btn btn-success btn-sm px-4"
+                            onclick="confirmApproveCuti()">
+                        Setujui
+                    </button>
+
+                    {{-- Hidden Forms --}}
+                    <form id="form-reject-cuti"
+                        action="{{ route('cuti.reject', $cuti->id) }}"
+                        method="POST" class="d-none">
                         @csrf
                         @method('PUT')
-                        <button class="btn btn-danger btn-sm px-4"
-                                onclick="return confirm('Tolak pengajuan cuti ini?')">
-                            Tolak
-                        </button>
                     </form>
 
-                    <form action="{{ route('cuti.approve', $cuti->id) }}"
-                        method="POST">
+                    <form id="form-approve-cuti"
+                        action="{{ route('cuti.approve', $cuti->id) }}"
+                        method="POST" class="d-none">
                         @csrf
                         @method('PUT')
-                        <button class="btn btn-success btn-sm px-4"
-                                onclick="return confirm('Setujui pengajuan cuti ini?')">
-                            Setujui
-                        </button>
                     </form>
 
                 @else
                     {{-- Sudah diputuskan --}}
-                    <form action="{{ route('cuti.reset', $cuti->id) }}"
-                        method="POST">
+                    <button type="button"
+                            class="btn btn-warning btn-sm px-4"
+                            onclick="confirmResetCuti()">
+                        Ubah Keputusan
+                    </button>
+
+                    <form id="form-reset-cuti"
+                        action="{{ route('cuti.reset', $cuti->id) }}"
+                        method="POST" class="d-none">
                         @csrf
                         @method('PUT')
-                        <button class="btn btn-warning btn-sm px-4"
-                                onclick="return confirm('Ubah status cuti ini menjadi pending kembali?')">
-                            Ubah Keputusan
-                        </button>
                     </form>
                 @endif
-
             </div>
+
 
         </div>
     </div>
@@ -165,3 +177,59 @@
 @endif
 
 @endsection
+
+@push('scripts')
+<script>
+function confirmRejectCuti() {
+    Swal.fire({
+        title: 'Tolak Pengajuan Cuti?',
+        text: 'Pengajuan cuti ini akan ditolak.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonText: 'Batal',
+        confirmButtonText: 'Ya, Tolak',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('form-reject-cuti').submit();
+        }
+    });
+}
+
+function confirmApproveCuti() {
+    Swal.fire({
+        title: 'Setujui Pengajuan Cuti?',
+        text: 'Pengajuan cuti ini akan disetujui.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#198754',
+        cancelButtonText: 'Batal',
+        confirmButtonText: 'Ya, Setujui',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('form-approve-cuti').submit();
+        }
+    });
+}
+
+function confirmResetCuti() {
+    Swal.fire({
+        title: 'Ubah Keputusan?',
+        text: 'Status cuti akan dikembalikan ke pending.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ffc107',
+        cancelButtonText: 'Batal',
+        confirmButtonText: 'Ya, Ubah',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('form-reset-cuti').submit();
+        }
+    });
+}
+</script>
+@endpush
+

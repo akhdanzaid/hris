@@ -66,18 +66,20 @@
                                 <td>{{ $user->created_at->format('d-m-Y') }}</td>
                                 <td class="text-center">
                                     @if ($user->role !== 'hrd')
-                                        <form action="{{ route('datauser.destroy', $user->id) }}"
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm px-3"
+                                                onclick="confirmDeleteUser({{ $user->id }})">
+                                            Hapus
+                                        </button>
+
+                                        <form id="delete-user-{{ $user->id }}"
+                                            action="{{ route('datauser.destroy', $user->id) }}"
                                             method="POST"
-                                            onsubmit="return confirm('Yakin hapus user ini?')">
+                                            class="d-none">
                                             @csrf
                                             @method('DELETE')
-
-                                            <button class="btn btn-danger btn-sm px-3">
-                                                Hapus
-                                            </button>
                                         </form>
                                     @else
-                                    <!-- rencana bakal diganti pake fontawesome/icon biar lebih oke jdi sementara gini dlu-->
                                         <span class="text-muted">—</span> 
                                     @endif
                                 </td>
@@ -168,3 +170,26 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function confirmDeleteUser(userId) {
+    Swal.fire({
+        title: 'Hapus User?',
+        text: 'User yang dihapus tidak dapat dikembalikan.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-user-' + userId).submit();
+        }
+    });
+}
+</script>
+@endpush
+

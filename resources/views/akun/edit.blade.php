@@ -15,7 +15,9 @@
         </div>
 
         <div class="card-body page-body">
-            <form method="POST" action="{{ route('akun.update') }}" onsubmit="return confirm('Apakah Anda yakin ingin menyimpan perubahan akun?')">
+            <form method="POST"
+                action="{{ route('akun.update') }}"
+                id="form-edit-akun">
                 @csrf
                 @method('PUT')
 
@@ -77,10 +79,10 @@
                        class="btn btn-secondary btn-sm px-4">
                         Kembali
                     </a>
-                    <button type="submit"
+                    <button type="button"
                             class="btn btn-primary btn-sm px-4"
                             style="background:#759EB8; border:none;"
-                            >
+                            onclick="confirmSaveAkun()">
                         Simpan
                     </button>
                 </div>
@@ -91,3 +93,26 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function confirmSaveAkun() {
+    Swal.fire({
+        title: 'Simpan Perubahan?',
+        text: 'Perubahan akun akan disimpan ke sistem.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#759EB8',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Simpan',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('form-edit-akun').submit();
+        }
+    });
+}
+</script>
+@endpush
+

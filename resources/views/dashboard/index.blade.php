@@ -144,15 +144,18 @@
                                     </form>
 
                                     {{-- tombol hapus --}}
-                                    <form action="{{ route('dashboard.todo.destroy', $todo->id) }}"
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger"
+                                            onclick="confirmDeleteTodo({{ $todo->id }})">
+                                        ✕
+                                    </button>
+
+                                    <form id="delete-todo-{{ $todo->id }}"
+                                        action="{{ route('dashboard.todo.destroy', $todo->id) }}"
                                         method="POST"
-                                        onsubmit="return confirm('Yakin mau hapus todo ini?')">
+                                        class="d-none">
                                         @csrf
                                         @method('DELETE')
-
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            ✕
-                                        </button>
                                     </form>
 
                                 </div>
@@ -161,6 +164,7 @@
                         @endforeach
                     </tbody>
                 </table>
+
             </div>
         </div>
 
@@ -168,3 +172,26 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function confirmDeleteTodo(todoId) {
+    Swal.fire({
+        title: 'Hapus Todo?',
+        text: 'Todo yang dihapus tidak dapat dikembalikan.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-todo-' + todoId).submit();
+        }
+    });
+}
+</script>
+@endpush
+

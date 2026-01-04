@@ -152,10 +152,39 @@
         </a>
 
 
-            <form action="{{ route('logout') }}" method="POST" class="d-inline-flex m-0 px-0">
+        <button type="button"
+                class="btn btn-danger"
+                onclick="confirmLogout()">
+            Logout
+        </button>
+
+        <form id="logout-form"
+            action="{{ route('logout') }}"
+            method="POST"
+            class="d-none">
             @csrf
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin mau logout?')">Logout</button>
-            </form>
+        </form>
+
+        <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: 'Konfirmasi Logout',
+                text: 'Apakah Anda yakin ingin keluar dari sistem?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Logout',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
+            });
+        }
+        </script>
+
             
         </div>
     </div>
@@ -167,7 +196,10 @@
     @yield('content')
 </div>
 
+@stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </body>
 </html>

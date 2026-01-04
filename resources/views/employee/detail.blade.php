@@ -244,17 +244,18 @@
                     </form>
 
                     {{-- FORM DELETE --}}
-                    <form action="{{ route('employee.destroy', $karyawan->id) }}"
+                    <button type="button"
+                            class="btn btn-danger btn-sm px-4"
+                            onclick="confirmDeleteKaryawan()">
+                        Hapus
+                    </button>
+
+                    <form id="delete-karyawan-form"
+                        action="{{ route('employee.destroy', $karyawan->id) }}"
                         method="POST"
-                        onsubmit="return confirm('Yakin ingin menghapus data karyawan ini?')"
-                        class="m-0">
+                        class="d-none">
                         @csrf
                         @method('DELETE')
-
-                        <button type="submit"
-                                class="btn btn-danger btn-sm px-4">
-                            Hapus
-                        </button>
                     </form>
 
                 </div>
@@ -277,3 +278,26 @@ function previewPhoto(event) {
     reader.readAsDataURL(file);
 }
 </script>
+
+@push('scripts')
+<script>
+function confirmDeleteKaryawan() {
+    Swal.fire({
+        title: 'Hapus Data Karyawan?',
+        text: 'Data karyawan yang dihapus tidak dapat dikembalikan.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-karyawan-form').submit();
+        }
+    });
+}
+</script>
+@endpush
+
