@@ -82,31 +82,43 @@
                     </thead>
 
                     <tbody>
-                        @forelse ($riwayatCuti as $item)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $item->karyawan->name }}</td>
-                            <td>{{ $item->alasan }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal_mulai)->translatedFormat('d F Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->translatedFormat('d F Y') }}</td>
-                            <td class="text-center">
-                                <span class="badge
-                                    @if ($item->status === 'pending') bg-warning
-                                    @elseif ($item->status === 'approved') bg-success
-                                    @else bg-danger
-                                    @endif">
-                                    {{ ucfirst($item->status) }}
-                                </span>
-                            </td>
-                        </tr>
+                        @forelse ($riwayatCuti as $index => $item)
+                            <tr>
+                                <td class="text-center">{{ $index + 1 }}</td>
+
+                                <td>{{ $item->karyawan->name ?? '-' }}</td>
+
+                                <td>{{ $item->alasan }}</td>
+
+                                <td>
+                                    {{ \Carbon\Carbon::parse($item->tanggal_mulai)
+                                        ->translatedFormat('d F Y') }}
+                                </td>
+
+                                <td>
+                                    {{ \Carbon\Carbon::parse($item->tanggal_selesai)
+                                        ->translatedFormat('d F Y') }}
+                                </td>
+
+                                <td class="text-center">
+                                    @if ($item->status === 'pending')
+                                        <span class="badge bg-warning text-dark">PENDING</span>
+                                    @elseif ($item->status === 'approved')
+                                        <span class="badge bg-success">DISETUJUI</span>
+                                    @elseif ($item->status === 'rejected')
+                                        <span class="badge bg-danger">DITOLAK</span>
+                                    @endif
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="6" class="text-center text-muted py-3">
-                                Belum ada pengajuan cuti
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-3">
+                                    Belum ada pengajuan cuti
+                                </td>
+                            </tr>
                         @endforelse
-                        </tbody>
+                    </tbody>
+
                 </table>
             </div>
 

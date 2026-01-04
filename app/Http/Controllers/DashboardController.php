@@ -69,7 +69,7 @@ class DashboardController extends Controller
             ->with('success', 'Todo berhasil ditambahkan');
     }
 
-    public function destroy($id)
+    public function destroyTodo($id)
     {
         Todo::findOrFail($id)->delete();
 
@@ -77,7 +77,7 @@ class DashboardController extends Controller
             ->with('success', 'Todo berhasil dihapus');
     }
 
-    public function toggle($id)
+    public function toggleTodo($id)
     {
         $todo = Todo::findOrFail($id);
         $todo->is_done = !$todo->is_done;

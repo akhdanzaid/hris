@@ -42,12 +42,13 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | DASHBOARD (ROLE SPLIT)
+    | DASHBOARD
     |--------------------------------------------------------------------------
     */
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->middleware('role:hrd')
         ->name('dashboard.index');
+
 
     Route::get('/dashboardk', [DashboardController::class, 'indexk'])
         ->middleware('role:karyawan')
@@ -59,6 +60,14 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::middleware('role:hrd')->group(function () {
+
+        /* TO DO */        
+        Route::prefix('dashboard/todo')->name('dashboard.todo.')->group(function () {
+            Route::post('/', [DashboardController::class, 'storeTodo'])->name('store');
+            Route::patch('/{id}/toggle', [DashboardController::class, 'toggleTodo'])->name('toggle');
+            Route::delete('/{id}', [DashboardController::class, 'destroyTodo'])->name('destroy');
+        });
+
 
         /* DATA KARYAWAN */
         Route::prefix('employee')->name('employee.')->group(function () {

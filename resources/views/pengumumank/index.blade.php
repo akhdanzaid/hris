@@ -43,7 +43,7 @@
                 </thead>
                  @forelse ($pengumuman as $item)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{ $item->jenis_pengumuman }}</td>
                     <td>{{ $item->deskripsi }}</td>
                     <td>{{ $item->kepada }}</td>

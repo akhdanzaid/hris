@@ -100,7 +100,8 @@
                     </a>
 
                     <button type="submit"
-                            class="btn btn-primary btn-sm px-4">
+                            class="btn btn-primary btn-sm px-4"               
+                            style="background:#759EB8;border:none">
                         Ajukan
                     </button>
                 </div>

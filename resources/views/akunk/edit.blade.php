@@ -73,7 +73,7 @@
 
                 {{-- Action --}}
                 <div class="d-flex justify-content-end gap-3 mt-5">
-                    <a href="{{ route('dashboard.index') }}"
+                    <a href="{{ route('dashboardk.index') }}"
                        class="btn btn-secondary btn-sm px-4">
                         Kembali
                     </a>
