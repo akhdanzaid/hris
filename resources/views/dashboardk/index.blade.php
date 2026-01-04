@@ -24,29 +24,40 @@
 
     {{-- Info Gaji --}}
     <div class="row g-3 mb-5">
+
         <div class="col-md-4">
-            <div class="stat-card
-                {{ session('just_logged_in') ? 'animate-stat delay-1' : '' }}">
+            <div class="stat-card {{ session('just_logged_in') ? 'animate-stat delay-1' : '' }}">
                 <p class="mb-1 text-muted">Gaji Pokok</p>
-                <h3>Rp. 15.000.000</h3>
+                <h3>
+                    {{ $gajiTerakhir
+                        ? 'Rp. ' . number_format($gajiTerakhir->gaji_pokok, 0, ',', '.')
+                        : '-' }}
+                </h3>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="stat-card
-                {{ session('just_logged_in') ? 'animate-stat delay-2' : '' }}">
+            <div class="stat-card {{ session('just_logged_in') ? 'animate-stat delay-2' : '' }}">
                 <p class="mb-1 text-muted">Potongan</p>
-                <h3>Rp. 100.000</h3>
+                <h3>
+                    {{ $gajiTerakhir
+                        ? 'Rp. ' . number_format($gajiTerakhir->total_potongan, 0, ',', '.')
+                        : '-' }}
+                </h3>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="stat-card
-                {{ session('just_logged_in') ? 'animate-stat delay-3' : '' }}">
+            <div class="stat-card {{ session('just_logged_in') ? 'animate-stat delay-3' : '' }}">
                 <p class="mb-1 text-muted">Total Gaji</p>
-                <h3>Rp. 14.900.000</h3>
+                <h3>
+                    {{ $gajiTerakhir
+                        ? 'Rp. ' . number_format($gajiTerakhir->total_gaji, 0, ',', '.')
+                        : '-' }}
+                </h3>
             </div>
         </div>
+
     </div>
 
     {{-- view riwayat --}}

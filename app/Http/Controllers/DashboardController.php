@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Todo;
 use App\Models\Karyawan;
 use App\Models\Cuti;
+use App\Models\Gaji;
+
 
 class DashboardController extends Controller
 {
@@ -41,16 +43,26 @@ class DashboardController extends Controller
         $karyawan = $user->karyawan;
 
         $riwayatCuti = collect();
+        $gajiTerakhir = null;
 
         if ($karyawan) {
+
+            // Riwayat cuti karyawan
             $riwayatCuti = Cuti::where('karyawan_id', $karyawan->id)
                 ->orderBy('created_at', 'desc')
                 ->get();
+
+            // Gaji terakhir karyawan
+            $gajiTerakhir = Gaji::where('karyawan_id', $karyawan->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
         }
 
-        return view('dashboardk.index', compact('riwayatCuti'));
+        return view('dashboardk.index', compact(
+            'riwayatCuti',
+            'gajiTerakhir'
+        ));
     }
-
 
     public function storeTodo(Request $request)
     {
