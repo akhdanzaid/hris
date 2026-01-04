@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Todo;
 use App\Models\Karyawan;
 use App\Models\Cuti;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -33,27 +33,24 @@ class DashboardController extends Controller
             'pendingCuti'
         ));
     }
+
+    // dashboard karyawan
     public function indexk()
     {
-        // Ambil user login
-    $user = Auth::user();
+        $user = Auth::user();
+        $karyawan = $user->karyawan;
 
-    // Cari data karyawan berdasarkan email
-    $karyawan = Karyawan::where('email', $user->email)->first();
+        $riwayatCuti = collect();
 
-    // Default data kosong (anti error)
-    $cuti = collect();
+        if ($karyawan) {
+            $riwayatCuti = Cuti::where('karyawan_id', $karyawan->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
 
-    // Kalau karyawan ditemukan, ambil cutinya
-    if ($karyawan) {
-        $cuti = Cuti::with('karyawan')
-            ->where('karyawan_id', $karyawan->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        return view('dashboardk.index', compact('riwayatCuti'));
     }
 
-    return view('dashboardk.index', compact('cuti', 'karyawan'));
-    }
 
     public function storeTodo(Request $request)
     {

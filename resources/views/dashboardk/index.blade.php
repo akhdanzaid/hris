@@ -52,17 +52,25 @@
     {{-- view riwayat --}}
     <div class="page-index-body">
 
+        {{-- Notifikasi --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
     <div class="card">
 
     {{-- Header --}}
         <div class="card-header page-header">
             <h5 class="page-title mb-0">Riwayat Pengajuan Cuti</h5>
         </div>
-        <div class="card-body">
+        <div class="card-body page-body">
 
             <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle">
-                    <thead>
+                <table class="table table-bordered align-middle table-card">
+                    <thead class="text-center">
                         <tr>
                             <th style="width: 50px;">No</th>
                             <th>Nama Karyawan</th>
@@ -74,34 +82,31 @@
                     </thead>
 
                     <tbody>
-    @if ($cuti->count() > 0)
-        @foreach ($cuti as $item)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->karyawan->name }}</td>
-                <td>{{ $item->alasan }}</td>
-                <td>{{ $item->tanggal_mulai }}</td>
-                <td>{{ $item->tanggal_selesai }}</td>
-                <td class="text-center">
-                    @if ($item->status === 'pending')
-                        <span class="badge bg-warning">Pending</span>
-                    @elseif ($item->status === 'approved')
-                        <span class="badge bg-success">Approved</span>
-                    @else
-                        <span class="badge bg-danger">Rejected</span>
-                    @endif
-                </td>
-            </tr>
-        @endforeach
-    @else
-        <tr>
-            <td colspan="6" class="text-center text-muted py-3">
-                Belum ada pengajuan cuti
-            </td>
-        </tr>
-    @endif
-</tbody>
-
+                        @forelse ($riwayatCuti as $item)
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $item->karyawan->name }}</td>
+                            <td>{{ $item->alasan }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->tanggal_mulai)->translatedFormat('d F Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->translatedFormat('d F Y') }}</td>
+                            <td class="text-center">
+                                <span class="badge
+                                    @if ($item->status === 'pending') bg-warning
+                                    @elseif ($item->status === 'approved') bg-success
+                                    @else bg-danger
+                                    @endif">
+                                    {{ ucfirst($item->status) }}
+                                </span>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-3">
+                                Belum ada pengajuan cuti
+                            </td>
+                        </tr>
+                        @endforelse
+                        </tbody>
                 </table>
             </div>
 

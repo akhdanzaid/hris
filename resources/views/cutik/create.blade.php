@@ -6,14 +6,21 @@
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endpush
 
+@php
+    $karyawan = Auth::user()->karyawan;
+@endphp
+
 @section('content')
 <div class="container-fluid">
 
     <div class="card form-card">
+
+        {{-- Header --}}
         <div class="card-header page-header">
             <h5 class="page-title mb-0">Ajukan Cuti</h5>
         </div>
 
+        {{-- Body --}}
         <div class="card-body page-body">
             <form method="POST"
                   action="{{ route('cutik.store') }}"
@@ -24,23 +31,17 @@
                 <div class="mb-3">
                     <label class="form-label">NIK</label>
                     <input type="text"
-                           id="nik"
-                           class="form-control"
-                           placeholder="Masukkan NIK"
-                           required>
-
-                    <small id="nikError"
-                           class="text-danger d-none">
-                        NIK tidak ditemukan
-                    </small>
+                           class="form-control bg-light"
+                           value="{{ $karyawan->nik }}"
+                           readonly>
                 </div>
 
                 {{-- Nama --}}
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
                     <input type="text"
-                           id="nama"
                            class="form-control bg-light"
+                           value="{{ $karyawan->name }}"
                            readonly>
                 </div>
 
@@ -48,15 +49,10 @@
                 <div class="mb-3">
                     <label class="form-label">Nomor Telepon Aktif</label>
                     <input type="text"
-                           id="phone"
                            class="form-control bg-light"
+                           value="{{ $karyawan->phone }}"
                            readonly>
                 </div>
-
-                {{-- Hidden karyawan_id --}}
-                <input type="hidden"
-                       name="karyawan_id"
-                       id="karyawan_id">
 
                 {{-- Alasan --}}
                 <div class="mb-3">
@@ -97,10 +93,14 @@
                 </div>
 
                 {{-- Action --}}
-                <div class="text-end">
+                <div class="page-action d-flex gap-2">
+                    <a href="{{ route('cutik.index') }}"
+                       class="btn btn-secondary btn-sm px-4">
+                        Kembali
+                    </a>
+
                     <button type="submit"
-                            id="btnSubmit"
-                            class="btn btn-primary px-4">
+                            class="btn btn-primary btn-sm px-4">
                         Ajukan
                     </button>
                 </div>
@@ -110,48 +110,4 @@
     </div>
 
 </div>
-
-<!-- AJAX -->
-<script>
-const nikInput   = document.getElementById('nik');
-const namaInput  = document.getElementById('nama');
-const phoneInput = document.getElementById('phone');
-const errorText  = document.getElementById('nikError');
-const btnSubmit  = document.getElementById('btnSubmit');
-const idInput    = document.getElementById('karyawan_id');
-
-// default: tidak boleh submit
-btnSubmit.disabled = true;
-
-nikInput.addEventListener('blur', function () {
-    const nik = this.value.trim();
-
-    // reset state
-    namaInput.value  = '';
-    phoneInput.value = '';
-    idInput.value    = '';
-    btnSubmit.disabled = true;
-
-    if (!nik) return;
-
-    fetch(`/ajax/karyawan-by-nik/${nik}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data) {
-                namaInput.value  = data.name;
-                phoneInput.value = data.phone;
-                idInput.value    = data.id;
-
-                errorText.classList.add('d-none');
-                btnSubmit.disabled = false;
-            } else {
-                errorText.classList.remove('d-none');
-            }
-        })
-        .catch(() => {
-            errorText.classList.remove('d-none');
-        });
-});
-</script>
-
 @endsection

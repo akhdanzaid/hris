@@ -24,7 +24,7 @@
             </h4>
 
             <p class="text-muted mt-2">
-                Silahkan Tunggu HRD Membuka Sesi Absensi atau Hubungi HR Untuk Informasi Lebih Lanjut.
+                Silahkan Tunggu HRD Membuka Sesi Absensi atau Hubungi HRD Untuk Informasi Lebih Lanjut.
             </p>
 
         </div>
