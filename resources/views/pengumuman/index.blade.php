@@ -21,21 +21,33 @@
     </div>
 
     <div class="page-index-body">
+        {{-- Alert Success --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-2"></i>
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
 
         {{-- Search --}}
-        <form class="row g-2 align-items-center mb-3">
-            <div class="col">
-                <input type="text"
-                       class="form-control"
-                       placeholder="Cari Pengumuman">
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-secondary px-4"
-                        style="background:#759EB8; border:none;">
-                    Search
-                </button>
-            </div>
-        </form>
+<form method="GET" action="{{ route('pengumuman.index') }}"
+      class="row g-2 align-items-center mb-3">
+    <div class="col">
+        <input type="text"
+               name="search"
+               class="form-control"
+               placeholder="Cari Pengumuman"
+               value="{{ request('search') }}">
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-secondary px-4"
+                style="background:#759EB8; border:none;">
+            Search
+        </button>
+    </div>
+</form>
+
 
         {{-- Table --}}
         <div class="table-responsive">
@@ -49,16 +61,24 @@
                         <th>Waktu</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {{-- DATA DUMMY --}}
-                    <tr>
-                        <td class="text-center">1</td>
-                        <td>Pengingat</td>
-                        <td>Mengadakan pertemuan dengan perusahaan A</td>
-                        <td>Produksi Tim Kreatif</td>
-                        <td>4 Januari 2025</td>
-                    </tr>
-                </tbody>
+              <tbody>
+            @forelse ($pengumuman as $item)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->jenis_pengumuman }}</td>
+                    <td>{{ $item->deskripsi }}</td>
+                    <td>{{ $item->kepada }}</td>
+                    <td>{{ $item->waktu}}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" class="text-center text-muted">
+                        Belum ada pengumuman
+                    </td>
+                </tr>
+            @endforelse
+</tbody>
+
             </table>
         </div>
 

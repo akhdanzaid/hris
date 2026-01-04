@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             KaryawanSeeder::class,
             CutiSeeder::class,
             UserSeeder::class,
-            TodoSeeder::class
+            TodoSeeder::class,
+            PengumumanSeeder::class
         ]);
     }
 }

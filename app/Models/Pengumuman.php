@@ -10,4 +10,11 @@ class Pengumuman extends Model
     use HasFactory;
 
     protected $table = 'pengumuman';
+
+    protected $fillable = [
+        'jenis_pengumuman',
+        'deskripsi',
+        'kepada',
+        'waktu'];
+    
 }

@@ -11,12 +11,15 @@
 
     <div class="page-index-body">
 
-        {{-- Search --}}
-        <form class="row g-2 align-items-center mb-3">
+          {{-- Search --}}
+        <form method="GET" action="{{ route('pengumumank.index') }}"
+            class="row g-2 align-items-center mb-3">
             <div class="col">
                 <input type="text"
-                       class="form-control"
-                       placeholder="Cari Pengumuman">
+                    name="search"
+                    class="form-control"
+                    placeholder="Cari Pengumuman"
+                    value="{{ request('search') }}">
             </div>
             <div class="col-auto">
                 <button class="btn btn-secondary px-4"
@@ -38,16 +41,21 @@
                         <th>Waktu</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {{-- DATA DUMMY --}}
-                    <tr>
-                        <td class="text-center">1</td>
-                        <td>Pengingat</td>
-                        <td>Mengadakan pertemuan dengan perusahaan A</td>
-                        <td>Produksi Tim Kreatif</td>
-                        <td>4 Januari 2025</td>
-                    </tr>
-                </tbody>
+                 @forelse ($pengumuman as $item)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->jenis_pengumuman }}</td>
+                    <td>{{ $item->deskripsi }}</td>
+                    <td>{{ $item->kepada }}</td>
+                    <td>{{ $item->waktu }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" class="text-center text-muted">
+                        Belum ada pengumuman
+                    </td>
+                </tr>
+            @endforelse
             </table>
         </div>
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Todo;
 use App\Models\Karyawan;
 use App\Models\Cuti;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -34,7 +35,24 @@ class DashboardController extends Controller
     }
     public function indexk()
     {
-        return view('dashboardk.index');
+        // Ambil user login
+    $user = Auth::user();
+
+    // Cari data karyawan berdasarkan email
+    $karyawan = Karyawan::where('email', $user->email)->first();
+
+    // Default data kosong (anti error)
+    $cuti = collect();
+
+    // Kalau karyawan ditemukan, ambil cutinya
+    if ($karyawan) {
+        $cuti = Cuti::with('karyawan')
+            ->where('karyawan_id', $karyawan->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    return view('dashboardk.index', compact('cuti', 'karyawan'));
     }
 
     public function storeTodo(Request $request)

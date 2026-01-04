@@ -74,13 +74,34 @@
                     </thead>
 
                     <tbody>
-                        {{-- kondisi saat data kosong --}}
-                        <tr>
-                            <td colspan="6" class="text-center text-muted py-3">
-                                Belum ada pengajuan cuti
-                            </td>
-                        </tr>
-                    </tbody>
+    @if ($cuti->count() > 0)
+        @foreach ($cuti as $item)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $item->karyawan->name }}</td>
+                <td>{{ $item->alasan }}</td>
+                <td>{{ $item->tanggal_mulai }}</td>
+                <td>{{ $item->tanggal_selesai }}</td>
+                <td class="text-center">
+                    @if ($item->status === 'pending')
+                        <span class="badge bg-warning">Pending</span>
+                    @elseif ($item->status === 'approved')
+                        <span class="badge bg-success">Approved</span>
+                    @else
+                        <span class="badge bg-danger">Rejected</span>
+                    @endif
+                </td>
+            </tr>
+        @endforeach
+    @else
+        <tr>
+            <td colspan="6" class="text-center text-muted py-3">
+                Belum ada pengajuan cuti
+            </td>
+        </tr>
+    @endif
+</tbody>
+
                 </table>
             </div>
 
