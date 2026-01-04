@@ -10,52 +10,55 @@
 <div class="container-fluid">
 
     {{-- Welcome Banner --}}
-    <div class="welcome-box d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h4 class="mb-1">Selamat Datang</h4>
-            <p class="mb-0 text-muted">@if(Auth::check())
+    <div class="welcome-box mb-4 {{ session('just_logged_in') ? 'animate-welcome' : '' }}">
+        <div class="welcome-content {{ session('just_logged_in') ? 'animate-text' : '' }}">
+            <h3 class="mb-1">SELAMAT DATANG</h3>
+            <p class="mb-0">
                 {{ Auth::user()->username }}
-                @endif</p>
+            </p>
         </div>
-        <img src="{{ asset('img/avatar.png') }}" alt="avatar" class="welcome-avatar">
+
+        <img src="{{ asset('images/karyawan/hrd.png') }}"
+            alt="avatar"
+            class="welcome-avatar {{ session('just_logged_in') ? 'animate-avatar' : '' }}">
     </div>
 
-    {{-- Statistik --}}
+    {{-- Statistik card --}}
     <div class="row g-3 mb-5">
 
-    {{-- Total Karyawan --}}
-    <div class="col-md-3">
-        <div class="stat-card">
-            <h3>{{ $totalKaryawan }}</h3>
-            <p>Karyawan</p>
+        <div class="col-md-3">
+            <div class="stat-card 
+                {{ session('just_logged_in') ? 'animate-stat delay-1' : '' }}">
+                <h3>{{ $totalKaryawan }}</h3>
+                <p>Karyawan</p>
+            </div>
         </div>
-    </div>
 
-    {{-- Total Hadir (sementara static) --}}
-    <div class="col-md-3">
-        <div class="stat-card">
-            <h3>50</h3>
-            <p>Total Hadir</p>
+        <div class="col-md-3">
+            <div class="stat-card 
+                {{ session('just_logged_in') ? 'animate-stat delay-2' : '' }}">
+                <h3>50</h3>
+                <p>Total Hadir</p>
+            </div>
         </div>
-    </div>
 
-    {{-- Cuti Disetujui --}}
-    <div class="col-md-3">
-    <div class="stat-card">
-        <h3>{{ $pendingCuti }}</h3>
-        <p>Pengajuan Cuti</p>
-    </div>
-    </div>
-
-    {{-- Current Task --}}
-    <div class="col-md-3">
-        <div class="stat-card">
-            <h3>{{ $currentTask }}</h3>
-            <p>Current Task</p>
+        <div class="col-md-3">
+            <div class="stat-card
+                {{ session('just_logged_in') ? 'animate-stat delay-3' : '' }}">
+                <h3>{{ $pendingCuti }}</h3>
+                <p>Pengajuan Cuti</p>
+            </div>
         </div>
-    </div>
 
-</div>
+        <div class="col-md-3">
+            <div class="stat-card
+                {{ session('just_logged_in') ? 'animate-stat delay-4' : '' }}">
+                <h3>{{ $currentTask }}</h3>
+                <p>To do</p>
+            </div>
+        </div>
+
+    </div>
 
 
     {{-- Todo --}}
@@ -98,8 +101,8 @@
                     <thead class="table-light">
                         <tr>
                             <th>To do</th>
-                            <th>Date</th>
-                            <th class="text-end">Action</th>
+                            <th>Tanggal</th>
+                            <th class="text-end">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

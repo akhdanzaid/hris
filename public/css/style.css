@@ -147,18 +147,130 @@ body {
    WELCOME / DASHBOARD
 ========================= */
 .welcome-box {
-    background: linear-gradient(90deg, #93c5fd, #bfdbfe);
-    padding: 20px 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+    position: relative;
+    padding: 26px 36px;
+    height: 160px;
+    border-radius: 16px;
+    background: linear-gradient(
+        90deg,
+        #b7ecff 0%,
+        #a8d8ff 50%,
+        #9cbcff 100%
+    );
+    overflow: hidden;
+
+    display: flex;
+    align-items: center; 
 }
 
-.welcome-box h4 {
-    font-weight: 600;
+.welcome-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: inherit;
+    z-index: 0;
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 1;
+    max-width: 55%;
+    text-align: left; 
 }
 
 .welcome-avatar {
-    width: 150px;
+    position: absolute;
+    right: 24px;
+    bottom: 0;
+    height: 165px;
+    width: auto;
+    z-index: 1;
+}
+
+.welcome-box h3 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #0f172a;
+}
+
+.welcome-box p {
+    font-size: 24px;
+    color: #475569;
+}
+
+/* animasi welcome */
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-welcome {
+    animation: fadeSlideUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeText {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-text {
+    opacity: 0;
+    animation: fadeText 0.5s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeAvatar {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-avatar {
+    opacity: 0;
+    animation: fadeAvatar 0.6s ease-out forwards;
+    animation-delay: 0.45s;
+}
+
+
+
+/* =========================
+   STAT CARD
+========================= */
+.stat-card {
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    transition: .2s ease;
+}
+
+.stat-card h3 {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.stat-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #374151;
 }
 
 /* Hover shared */
@@ -174,27 +286,34 @@ body {
     box-shadow: 0 6px 14px rgba(0,0,0,.1);
 }
 
-/* =========================
-   STAT CARD
-========================= */
-.stat-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+
+/* ANIMASI */
+@keyframes statFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.stat-card h3 {
-    font-weight: 700;
-    margin-bottom: 4px;
+.animate-stat {
+    opacity: 0;
+    animation: statFadeUp 0.55s ease-out forwards;
 }
 
-.stat-card p {
-    margin: 0;
-    font-size: 14px;
-    color: #6b7280;
+.delay-1 { animation-delay: 0.3s; }
+.delay-2 { animation-delay: 0.45s; }
+.delay-3 { animation-delay: 0.6s; }
+.delay-4 { animation-delay: 0.75s; }
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,.12);
 }
+
 
 /* =========================
    TODO CARD

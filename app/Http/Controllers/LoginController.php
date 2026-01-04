@@ -18,8 +18,7 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required',
-        ],
-        [
+        ], [
             'username.required' => 'Username wajib diisi',
             'password.required' => 'Password wajib diisi',
         ]);
@@ -27,16 +26,17 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            // FLAG UNTUK ANIMASI WELCOME
+            session()->flash('just_logged_in', true);
+
             $user = Auth::user();
 
             // REDIRECT BERDASARKAN ROLE
             if ($user->role === 'hrd') {
-                return redirect()->route('dashboard.index')
-                    ->with('success', 'Selamat datang HRD');
+                return redirect()->route('dashboard.index');
             }
 
-            return redirect() ->route('dashboardk.index')
-                ->with('success', 'Login berhasil, selamat datang ' . $user->username);
+            return redirect()->route('dashboardk.index');
         }
 
         return back()->withErrors([
