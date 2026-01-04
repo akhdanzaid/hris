@@ -26,7 +26,22 @@ class PositionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Karyawan',
+                'name' => 'Software Engineer',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Staff Keuangan',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Staff Operasional',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Staff Produksi',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -101,7 +101,6 @@ Route::prefix('absensi')
         Route::post('/session/{id}/close', [AbsensiController::class, 'closeSession'])
             ->name('session.close');
 
-        // ✅ TAMBAHKAN INI
         Route::post('/store', [AbsensiController::class, 'store'])
             ->name('store');
     });

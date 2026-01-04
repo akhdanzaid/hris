@@ -16,11 +16,11 @@ use Illuminate\Database\Eloquent\Model;
             'birth_date',
             'phone',
             'email',
+            'photo',
             'department_id',
             'position_id',
             'status_id',
-            'join_date',
-            'photo',
+            'join_date'
         ];
 
 
@@ -47,6 +47,11 @@ use Illuminate\Database\Eloquent\Model;
         public function cuti()
         {
             return $this->hasMany(Cuti::class);
+        }
+
+        public function user()
+        {
+            return $this->hasOne(User::class);
         }
 
         public function absensis()

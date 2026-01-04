@@ -19,7 +19,8 @@ return new class extends Migration
 
             $table->string('phone');
             $table->string('email')->nullable();
-
+            $table->string('photo')->nullable(); 
+            
             $table->foreignId('department_id')
                   ->constrained('departments')
                   ->cascadeOnDelete();
@@ -29,10 +30,10 @@ return new class extends Migration
                   ->cascadeOnDelete();
 
             $table->date('join_date');
+
             $table->foreignId('status_id')
                   ->constrained('statuses')
                   ->cascadeOnDelete();
-
 
             $table->timestamps();
         });
