@@ -15,13 +15,6 @@
         <div class="card-header page-header d-flex justify-content-between align-items-center">
             <h5 class="page-title mb-0">Data User</h5>
 
-            <button type="button"
-                    class="btn btn-primary btn-sm px-4"
-                    style="background:#759EB8;border:none"
-                    data-bs-toggle="modal"
-                    data-bs-target="#formModal">
-                Tambah Data
-            </button>
         </div>
 
         {{-- Body --}}
@@ -48,7 +41,6 @@
                             <th>Email</th>
                             <th>Role</th>
                             <th>Dibuat</th>
-                            <th width="10%">Aksi</th>
                         </tr>
                     </thead>
 
@@ -64,24 +56,6 @@
                                     </span>
                                 </td>
                                 <td>{{ $user->created_at->format('d-m-Y') }}</td>
-                                <td class="text-center">
-                                    @if ($user->role !== 'hrd')
-                                        <button type="button"
-                                                class="btn btn-danger btn-sm px-3"
-                                                onclick="confirmDeleteUser({{ $user->id }})">
-                                            Hapus
-                                        </button>
-
-                                        <form id="delete-user-{{ $user->id }}"
-                                            action="{{ route('datauser.destroy', $user->id) }}"
-                                            method="POST"
-                                            class="d-none">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
-                                    @else
-                                        <span class="text-muted">—</span> 
-                                    @endif
                                 </td>
                             </tr>
                         @empty
@@ -99,97 +73,8 @@
     </div>
 </div>
 
-{{-- Modal Tambah User --}}
-<div class="modal fade" id="formModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title">Form Input User Baru</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <form action="{{ route('datauser.register') }}" method="POST">
-                @csrf
-
-                <div class="modal-body">
-
-                    <div class="mb-3">
-                        <label class="form-label">Username</label>
-                        <input type="text"
-                               class="form-control"
-                               name="username"
-                               placeholder="Masukkan username"
-                               required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email"
-                               class="form-control"
-                               name="email"
-                               placeholder="Masukkan email"
-                               required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password"
-                               class="form-control"
-                               name="password"
-                               placeholder="Masukkan password"
-                               required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Role</label>
-                        <select class="form-select" name="role" required>
-                            <option value="">-- Pilih Role --</option>
-                            <option value="karyawan">Karyawan</option>
-                            <option value="hrd">HRD</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-secondary btn-sm px-4"
-                            data-bs-dismiss="modal">
-                        Batal
-                    </button>
-                    <button type="submit"
-                            class="btn btn-primary btn-sm px-4"
-                            style="background:#759EB8;border:none">
-                        Simpan
-                    </button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
 @endsection
 
-@push('scripts')
-<script>
-function confirmDeleteUser(userId) {
-    Swal.fire({
-        title: 'Hapus User?',
-        text: 'User yang dihapus tidak dapat dikembalikan.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#dc3545',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Ya, Hapus',
-        cancelButtonText: 'Batal',
-        reverseButtons: true
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.getElementById('delete-user-' + userId).submit();
-        }
-    });
-}
-</script>
-@endpush
+
+
 

@@ -34,5 +34,23 @@ class UserSeeder extends Seeder
                 'karyawan_id' => 2,
             ]
         );
+        User::updateOrCreate(
+            ['username' => 'iqbal3'],
+            [
+                'password' => Hash::make('iqbalganteng'),
+                'email' => 'iqbal@gmail.com',
+                'role' => 'karyawan',
+                'karyawan_id' => 3,
+            ]
+        );
+        User::updateOrCreate(
+            ['username' => 'riszki'],
+            [
+                'password' => Hash::make('riszkiganteng'),
+                'email' => 'riszki@gmail.com',
+                'role' => 'karyawan',
+                'karyawan_id' => 4,
+            ]
+        );
     }
 }
