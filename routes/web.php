@@ -89,6 +89,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [DatauserController::class, 'index'])->name('index');
             Route::delete('/{id}', [DatauserController::class, 'destroy'])->name('destroy');
             Route::post('/register', [RegisterController::class, 'register'])->name('register');
+            
+            // 🔐 RESET PASSWORD
+            Route::post('/{id}/reset-password', [DatauserController::class, 'resetPassword'])
+                ->name('reset-password');
         });
 
         /* CUTI HRD */

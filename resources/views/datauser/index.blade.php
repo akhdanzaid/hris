@@ -41,6 +41,7 @@
                             <th>Email</th>
                             <th>Role</th>
                             <th>Dibuat</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
 
@@ -57,6 +58,20 @@
                                 </td>
                                 <td>{{ $user->created_at->format('d-m-Y') }}</td>
                                 </td>
+                                           <td class="text-center">
+                            <form id="reset-form-{{ $user->id }}"
+                                action="{{ route('datauser.reset-password', $user->id) }}"
+                                method="POST"
+                                class="d-inline">
+                                @csrf
+                                <button type="button"
+                                        class="btn btn-warning btn-sm"
+                                        onclick="confirmReset({{ $user->id }}, '{{ $user->username }}')">
+                                    Reset Password
+                                </button>
+                            </form>
+                        </td>
+
                             </tr>
                         @empty
                             <tr>
@@ -72,6 +87,32 @@
         </div>
     </div>
 </div>
+
+
+
+{{-- UNTUK SWEET ALERT JS --}}
+@push('scripts')
+<script>
+function confirmReset(userId, username) {
+    Swal.fire({
+        title: 'Reset Password?',
+        html: `Password user <b>${username}</b> akan direset ke <b>123456</b>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Reset',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#f0ad4e',
+        cancelButtonColor: '#6c757d',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('reset-form-' + userId).submit();
+        }
+    });
+}
+</script>
+@endpush
+
 
 @endsection
 
